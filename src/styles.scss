@@ -1,1 +1,132 @@
 /* You can add global styles to this file, and also import other style files */
+.bg-primary {
+    background-color: #802081 !important;
+}
+
+.pt-10 {
+    padding-top: 4rem !important;
+}
+
+.px-6 {
+    padding-right: 2rem !important;
+    padding-left: 2rem !important;
+}
+
+.text-white {
+    --bs-text-opacity: 1;
+    color: rgba(255, 255, 255, 1) !important;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.btn-white {
+    border: 1px solid #802081;
+    width: 150px;
+    height: 50px;
+    background-color: #802081;
+}
+
+.mt-6 {
+    margin-top: 1rem !important;
+}
+
+.width-50 {
+    width: 100%;
+}
+
+.m-l-17 {
+    margin-left: 17px;
+}
+
+.active-text {
+    color: #ffffff;
+}
+
+.pb-21 {
+    padding-bottom: 5.1rem !important;
+}
+
+.mt-n22 {
+    margin-top: -8rem !important;
+}
+
+.mt-35px {
+    margin-top: 35px;
+}
+
+.border-shape {
+    border: 1px solid;
+    padding: 0px 5px 1px 5px;
+}
+
+
+.top-cat-list__title {
+    font-weight: 600;
+    color: #171717;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #eee;
+    padding: 15px;
+}
+
+.sub_title {
+    font-size: 18px;
+}
+
+.top-cat-list__subtitle {
+    color: #b9b9b9;
+}
+
+.top-cat-list__subtitle,
+.top-cat-list__title {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    font-size: 12px;
+    line-height: 1.2;
+    letter-spacing: -.4px;
+}
+
+.white-block {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.0196078431),
+        0 0 2px rgba(0, 0, 0, 0.0509803922), 0 1px 4px rgba(0, 0, 0, 0.0784313725);
+    border: none !important;
+}
+
+.white-block ul {
+    list-style: none !important;
+    padding-left: 0px !important;
+}
+
+.border-shapes {
+    border: 1px solid #fff;
+    padding: 6px 8px;
+    border-radius: var(--bs-border-radius) !important;
+    background: #ffc1079e;
+}
+
+
+.overflow-auto {
+    overflow: auto;
+}
+
+@media screen and (max-device-width: 480px) {
+    .btn-white {
+        width: 130px;
+    }
+}
+
+@media screen and (max-device-width: 640px) and (orientation: landscape) {
+    .btn-white {
+        width: 130px;
+    }
+}
