@@ -2,13 +2,13 @@
     <div class="card-body overflow-auto">
         <table class="table">
             <thead>
-              <tr>
-               <th>Activity Name</th>
-               <th>Initiated by</th>
-               <th>Initiated date</th>
-               <th>Action</th>
-               <th>History</th>
-              </tr>
+                <tr>
+                    <th>Activity Name</th>
+                    <th>Initiated by</th>
+                    <th>Initiated date</th>
+                    <th>Action</th>
+                    <th>History</th>
+                </tr>
             </thead>
             <tbody>
                 <tr>
@@ -16,15 +16,37 @@
                     <td>tests</td>
                     <td>02-04-2024</td>
                     <td>
-                        <i class="bi bi-journal-check"></i>
-                        <i class="bi bi-clipboard-x" style="margin: 0px 10px;"></i>
-                        <i class="bi bi-arrow-clockwise"></i>
+                        <div>
+                            <i class="bi bi-journal-check cursor-pointer" title="Approve" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
+                                (click)="allPopup('Approve')"></i>
+                            <i class="bi bi-clipboard-x cursor-pointer" title="Reject" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
+                                (click)="allPopup('Reject')"></i>
+                            <i class="bi bi-arrow-clockwise cursor-pointer" title="Return" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
+                                (click)="allPopup('Return')"></i>
+                            <i class="bi bi-card-list cursor-pointer" title="Collaboration" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
+                                (click)="allPopup('Collaboration')"></i>
+                        </div>
                     </td>
                     <td>
-                        <i class="bi bi-card-list"></i> 
+                        <i class="bi bi-card-list"></i>
                     </td>
                 </tr>
             </tbody>
-          </table>
+        </table>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">{{approveRejectTitle}} </h5>
+        <button type="button" class="btn-close text-reset font-size-10" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        ...
     </div>
 </div>

@@ -9,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PendingTableComponent implements OnInit {
 
+
+  public approveRejectTitle: any;
   constructor() {
   }
+
+
   ngOnInit(): void {
   }
 
+
+
+  public allPopup(message: any): void {
+    console.log('test', message)
+    this.approveRejectTitle = message == 'Approve' ? 'Approve & Forward to Role - (HOD)' :
+      message == 'Reject' ? 'Reject Application' :  message == 'Collaboration' ? 'Collaboration': 'Return to Initiator';
+  }
 }

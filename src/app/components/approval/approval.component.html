@@ -5,7 +5,7 @@
             <div>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="mb-2 mb-lg-0">
-                        <h3 class="mb-0  text-white"> <i class="bi bi-card-list"></i> Pending Approval For Project Creation</h3>
+                        <h3 class="mb-0  text-white"> <i class="bi bi-card-list"></i> {{pendingCompletedTitle}}</h3>
                     </div>
                 </div>
             </div>
@@ -14,14 +14,14 @@
             <div class="card white-block">
                 <div class="card-body">
                     <div class="d-flex">
-                        <div class="width-50">
-                            <button class="btn btn-white">
-                                <span class="active-text">Pending</span>
+                        <div class="width-50" >
+                            <button class="btn" [className]="pending ? 'pending-bg' : 'completed-bg'" (click)="pendingCompleted('Pending')">
+                                <span [className]="pending ? 'pending-bg-text' : 'completed-bg-text'" >Pending</span>
                             </button>
                         </div>
                         <div class="width-50">
-                            <button class="btn btn-white m-l-17">
-                                <span class="active-text">Completed</span>
+                            <button class="btn m-l-17" [className]="!completed ? 'completed-bg' : 'pending-bg'" (click)="pendingCompleted('Completed')">
+                                <span  [className]="!completed ? 'completed-bg-text' : 'pending-bg-text'" >Completed</span>
                             </button>
                         </div>
                     </div>
@@ -30,15 +30,12 @@
             </div>
             <div class="white-block mt-6">
                 <ul class="top-cat-list">
-                    <li>
-                        <div>
-                            <div class="top-cat-list__title">
-                                <span class="sub_title">Project Creation</span> <span class="border-shapes">20</span>
+                    <li *ngFor="let list of data">
+                            <div class="top-cat-list__title" (click)="listTitle(list.name)">
+                                <span class="sub_title" > {{list.name}} </span> <span class="border-shapes">{{list.count}} </span>
                             </div>
-
-                        </div>
                     </li>
-                    <li>
+                    <!-- <li>
                         <div>
                             <div class="top-cat-list__title">
                                 <span class="sub_title">Plan Purchase</span> <span class="border-shapes">20</span>
@@ -53,7 +50,7 @@
                             </div>
 
                         </div>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>
