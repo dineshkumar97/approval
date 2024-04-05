@@ -2,60 +2,43 @@
 <div class="mt-n22 px-6 container-fluid">
     <div class="row mt-2">
         <div class="col-lg-12 col-md-12 col-12">
-            <div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="mb-2 mb-lg-0">
-                        <h3 class="mb-0  text-white"> <i class="bi bi-card-list"></i> {{pendingCompletedTitle}}</h3>
-                    </div>
-                </div>
-            </div>
+            <h3 class="mb-0 mt-2 text-white"> <i class="bi bi-card-list"></i> {{pendingCompletedTitle}}</h3>
         </div>
-        <div class="mt-35px col-xl-3 col-lg-6 col-md-12 col-12">
+    </div>
+    <div class="row mt-30px">
+        <div class="col-xl-3 col-lg-6 col-md-12 col-12">
             <div class="card white-block">
                 <div class="card-body">
                     <div class="d-flex">
-                        <div class="width-50" >
-                            <button class="btn" [className]="pending ? 'pending-bg' : 'completed-bg'" (click)="pendingCompleted('Pending')">
-                                <span [className]="pending ? 'pending-bg-text' : 'completed-bg-text'" >Pending</span>
+                        <div class="width-50">
+                            <button class="btn" [className]="pending ? 'pending-bg' : 'completed-bg'"
+                                (click)="pendingCompleted('Pending')">
+                                <span [className]="pending ? 'pending-bg-text' : 'completed-bg-text'">Pending</span>
                             </button>
                         </div>
                         <div class="width-50">
-                            <button class="btn m-l-17" [className]="!completed ? 'completed-bg' : 'pending-bg'" (click)="pendingCompleted('Completed')">
-                                <span  [className]="!completed ? 'completed-bg-text' : 'pending-bg-text'" >Completed</span>
+                            <button class="btn m-l-17" [className]="!completed ? 'completed-bg' : 'pending-bg'"
+                                (click)="pendingCompleted('Completed')">
+                                <span
+                                    [className]="!completed ? 'completed-bg-text' : 'pending-bg-text'">Completed</span>
                             </button>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="white-block mt-6">
                 <ul class="top-cat-list">
                     <li *ngFor="let list of data">
-                            <div class="top-cat-list__title" (click)="listTitle(list.name)">
-                                <span class="sub_title" > {{list.name}} </span> <span class="border-shapes">{{list.count}} </span>
-                            </div>
-                    </li>
-                    <!-- <li>
-                        <div>
-                            <div class="top-cat-list__title">
-                                <span class="sub_title">Plan Purchase</span> <span class="border-shapes">20</span>
-                            </div>
-
+                        <div class="top-cat-list__title" (click)="listTitle(list.name)">
+                            <span class="sub_title"> {{list.name}} </span> <span class="border-shapes">{{list.count}}
+                            </span>
                         </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div class="top-cat-list__title">
-                                <span class="sub_title">Leave Applicatoin</span> <span class="border-shapes">20</span>
-                            </div>
-
-                        </div>
-                    </li> -->
+                    </li>                   
                 </ul>
             </div>
         </div>
-        <div class="mt-35px col-xl-9 col-lg-6 col-md-12 col-12">
-           <app-pending-table></app-pending-table>
+        <div class="col-xl-9 col-lg-6 col-md-12 col-12">
+            <app-pending-table></app-pending-table>
         </div>
 
     </div>
