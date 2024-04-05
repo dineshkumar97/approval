@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    background-color: #e4e4f4 !important;    
+}
 .bg-primary {
     background-color: #802081 !important;
 }
@@ -162,5 +165,27 @@
 @media screen and (max-device-width: 640px) and (orientation: landscape) {
     .btn-white {
         width: 130px;
+    }
+}
+
+.btn-icon{
+    cursor: pointer;
+    padding: 0 2px;
+    font-weight: bolder;
+    font-size: 1.675rem;
+    &.btn-clr-success{
+        color: #00BBB6;
+    }
+    &.btn-clr-danger{
+        color: #EC5663;
+    }
+    &.btn-clr-blue{
+        color: #0072CC;
+    }
+    &.btn-clr-ash{
+        color: #7076A6;
+    }
+    &.btn-clr-yellow{
+        color: #F9F871;
     }
 }

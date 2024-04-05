@@ -16,23 +16,36 @@
                     <td>tests</td>
                     <td>02-04-2024</td>
                     <td>
-                        <div>
-                            <i class="bi bi-journal-check cursor-pointer" title="Approve" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
-                                (click)="allPopup('Approve')"></i>
-                            <i class="bi bi-clipboard-x cursor-pointer" title="Reject" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
-                                (click)="allPopup('Reject')"></i>
-                            <i class="bi bi-arrow-clockwise cursor-pointer" title="Return" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
-                                (click)="allPopup('Return')"></i>
-                            <i class="bi bi-card-list cursor-pointer" title="Collaboration" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
-                                (click)="allPopup('Collaboration')"></i>
+                        <div class="d-flex">
+                            <span class="btn-icon btn-clr-success">
+                                <i class="bi bi-journal-check cursor-pointer" data-toggle="tooltip" title="Approve" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
+                                    (click)="allPopup('Approve')"></i>
+                            </span>
+                            <span class="btn-icon btn-clr-danger ps-2">
+                                <i class="bi bi-clipboard-x cursor-pointer" title="Reject" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
+                                    (click)="allPopup('Reject')"></i>
+                            </span>
+                            <span class="btn-icon btn-clr-blue ps-2">
+                                <i class="bi bi-arrow-counterclockwise cursor-pointer" title="Return"
+                                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                    aria-controls="offcanvasRight" (click)="allPopup('Return')"></i>
+                            </span>
+                            <span class="btn-icon btn-clr-ash ps-2">
+                                <i class="bi bi-chat-left cursor-pointer" title="Collaboration"
+                                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                    aria-controls="offcanvasRight" (click)="allPopup('Collaboration')"></i>
+                            </span>
+
                         </div>
                     </td>
                     <td>
-                        <i class="bi bi-card-list"></i>
+                        <span class="btn-icon btn-clr-blue">
+                            <i class="bi bi-clock-history" title="History" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
+                                (click)="allPopup('History')"></i>
+                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -44,7 +57,8 @@
     id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
         <h5 id="offcanvasRightLabel">{{approveRejectTitle}} </h5>
-        <button type="button" class="btn-close text-reset font-size-10" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" class="btn-close text-reset font-size-10" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
         ...
