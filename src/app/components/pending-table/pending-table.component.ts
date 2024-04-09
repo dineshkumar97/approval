@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, input } from '@angular/core';
+import { ApprovalItemResponce } from '../../models/approvalItem';
 
 @Component({
   selector: 'app-pending-table',
@@ -9,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PendingTableComponent implements OnInit {
 
+  @Input() tableData: ApprovalItemResponce[] = [];
 
   public approveRejectTitle: any;
   constructor() {
@@ -23,6 +25,6 @@ export class PendingTableComponent implements OnInit {
   public allPopup(message: any): void {
     console.log('test', message)
     this.approveRejectTitle = message == 'Approve' ? 'Approve & Forward to Role - (HOD)' :
-      message == 'Reject' ? 'Reject Application' :  message == 'Collaboration' ? 'Collaboration': 'Return to Initiator';
+      message == 'Reject' ? 'Reject Application' : message == 'Collaboration' ? 'Collaboration' : 'Return to Initiator';
   }
 }

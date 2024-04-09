@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PendingTableComponent } from '../pending-table/pending-table.component';
 import { NgFor } from '@angular/common';
+import { ApprovalService } from '../../services/approval.service';
+import { ApprovalListItem, ApprovalListItemResponce } from '../../models/approvalListItem';
+import { ApprovalItemResponce } from '../../models/approvalItem';
 
 @Component({
   selector: 'app-approval',
@@ -11,42 +14,54 @@ import { NgFor } from '@angular/common';
 })
 export class ApprovalComponent implements OnInit {
 
-  public pendingCompletedTitle: any;
-  public pendingTitle: any;
+  public title: any;
+  public userId: string;
+  public listitems: ApprovalListItemResponce;
+  public data: ApprovalListItem[] = [];
 
-  public data = [
-    { name: 'Project Creation', count: 20 },
-    { name: 'Plan Purchase', count: 30 },
-    { name: 'Leave Applicatoin', count: 2 }
-  ]
+  public pending = false;
+  public completed = false;
+  public approvalItems: ApprovalItemResponce[];
 
-  public pending=false;
-  public completed=false;
-  constructor() {
+  constructor(private service: ApprovalService) {
+    this.userId = "73";
   }
 
 
   ngOnInit(): void {
-    this.pendingCompletedTitle = `${'Pending Approval For'} ${this.data[0].name}`;
-    this.pendingTitle = `${'Pending Approval For'}`;
     this.pending = true;
     this.completed = false;
+    this.loadApprovalListItem();
+  }
+
+  loadApprovalListItem() {
+    this.service.GetApprovalListItem(this.userId).subscribe({
+      next: x => {
+        this.listitems = x;
+        this.listitems.pending.forEach(x => x.processTotal = x.processTotal.replace("(", "").replace(")", ""));
+        this.listitems.completed.forEach(x => x.processTotal = x.processTotal.replace("(", "").replace(")", ""));
+      }, error: err => console.log(err)
+    })
   }
 
 
   public pendingCompleted(message: any): void {
-    console.log('pendingCompleted', message);
-
-    this.pendingCompletedTitle = message == 'Pending' ? `${'Pending Approval For'} ${this.data[0].name}` : `${'Completed Approval For'} ${this.data[0].name}`
-    this.pendingTitle = message == 'Pending' ? `${'Pending Approval For'}` : `${'Completed Approval For'}`
     this.pending = message == 'Pending' ? true : false;
-    this.completed =  message == 'Completed' ? true : false;
+    this.completed = message == 'Completed' ? true : false;
+    this.data = message == "Pending" ? this.listitems.pending : this.listitems.completed;
   }
 
-  public listTitle(listMessage: any): void {
-    console.log('listTitle', listMessage)
-    console.log('pendingTitle', this.pendingTitle)
-    this.pendingCompletedTitle = `${this.pendingTitle} ${listMessage}`
+  public onListItemClick(data: ApprovalListItem) {
+    let index = this.data.findIndex(x => x.processID == data.processID);
+    this.data.forEach(x => x.isactive = false);
+    this.data[index].isactive = true;
+    this.title = data.processName;
+    this.service.GetApprovalItem(this.userId, data.processID).subscribe({
+      next: x => {
+        this.approvalItems = x;
+
+      }, error: err => console.log(err)
+    })
   }
 
 }

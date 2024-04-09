@@ -90,6 +90,9 @@ body{
     border-bottom: 1px solid #eee;
     padding: 15px;
     cursor: pointer;
+    &.active{
+        background-color:#FFFADE;
+    }
 }
 
 .sub_title {
