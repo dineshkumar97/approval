@@ -3,11 +3,12 @@ import { ApprovalItemResponce } from '../../models/approvalItem';
 import { CommonModule } from '@angular/common';
 import { ApprovalService } from '../../services/approval.service';
 import { History } from '../../models/history';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-pending-table',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './pending-table.component.html',
   styleUrl: './pending-table.component.scss'
 })
@@ -16,31 +17,55 @@ export class PendingTableComponent implements OnInit {
   @Input() tableData: ApprovalItemResponce[] = [];
 
   public approveRejectTitle: any;
-  historyList: History[] = [];
-  constructor(private service: ApprovalService) {
+  public historyList: History[] = [];
+  public approvalForm: FormGroup;
+  public approvalData: any;
+  public userId: string;
+  constructor(private service: ApprovalService, private fb: FormBuilder) {
+    this.userId = "73";
   }
 
 
   ngOnInit(): void {
+    this.initilization();
   }
 
 
 
-  onApprovalFlowClick(wrokflowType: string, data: ApprovalItemResponce): void {
+  public initilization(): void {
+    this.loadApprovalForm();
+  }
+
+  public loadApprovalForm(): void {
+    this.approvalForm = this.fb.group({
+      approval: [null, Validators.required]
+    })
+  }
+
+  activityName: string;
+  public onApprovalFlowClick(wrokflowType: string, activityName: string, data: ApprovalItemResponce): void {
+    this.approvalData = data;
     switch (wrokflowType) {
       case "Approve":
         this.approveRejectTitle = wrokflowType;
+        this.activityName = activityName;
         break;
       case "Reject":
         this.approveRejectTitle = wrokflowType;
+        this.activityName = activityName;
         break;
       case "Return":
         this.approveRejectTitle = wrokflowType;
+        this.activityName = activityName;
+        break;
+      case "Collaboration":
+        this.approveRejectTitle = wrokflowType;
+        this.activityName = activityName;
         break;
     }
   }
 
-  onHistoryClick(data: ApprovalItemResponce) {
+  public onHistoryClick(data: ApprovalItemResponce) {
     this.historyList = [];
     this.service.GetHistory(data.instanceID, data.processID.toString()).subscribe({
       next: x => {
@@ -49,4 +74,42 @@ export class PendingTableComponent implements OnInit {
     });
   }
 
+  public onSubmit(): void {
+    this.approvalCommit();
+  }
+
+  approvalCommit():void{
+    if (this.approveRejectTitle === 'Collaboration') {
+      const json: any = {
+        currentFlowID: this.approvalData.currentFlowID,
+        instanceID: this.approvalData.instanceID,
+        currentuserID: this.userId,
+        comments: this.approvalForm.value.approval,
+      }
+      this.service.SetComment(json).subscribe({
+        next: response => {
+        }, error: err => console.log(err)
+      });
+    } else {
+      const json: any = {
+        processID: this.approvalData.processID,
+        currentFlowID: this.approvalData.currentFlowID,
+        comboKey: this.activityName,
+        packageID: this.approvalData.processPackageID,
+        instanceID: this.approvalData.instanceID,
+        viewLink: this.approvalData.viewLink,
+        currentuserID: this.userId,
+        remarks: this.approvalForm.value.approval,
+        activityName: this.activityName,
+      }
+      this.service.SetApprovalWorkflow(json).subscribe({
+        next: response => {
+        }, error: err => console.log(err)
+      });
+    }
+  }
+
+  public closeApprove(): void {
+    this.approvalForm.reset();
+  }
 }

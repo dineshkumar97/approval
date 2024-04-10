@@ -14,28 +14,30 @@
                 <tr *ngFor="let item of tableData; index as i;">
                     <td>{{item.processName}}</td>
                     <td>{{item.initiatedbyname}}</td>
-                    <td>{{item.processInitiatedDate}}</td>
+                    <td>{{item.processInitiatedDate | date:"dd-MMM-yyyy"}}</td>
                     <td>
                         <div class="d-flex">
                             <span class="btn-icon btn-clr-success">
                                 <i class="bi bi-journal-check cursor-pointer" data-toggle="tooltip" title="Approve"
                                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                    aria-controls="offcanvasRight" (click)="onApprovalFlowClick('Approve',item)"></i>
+                                    aria-controls="offcanvasRight"
+                                    (click)="onApprovalFlowClick('Approve','F',item)"></i>
                             </span>
                             <span class="btn-icon btn-clr-danger ps-2">
                                 <i class="bi bi-clipboard-x cursor-pointer" title="Reject" data-bs-toggle="offcanvas"
                                     data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
-                                    (click)="onApprovalFlowClick('Reject',item)"></i>
+                                    (click)="onApprovalFlowClick('Reject','R',item)"></i>
                             </span>
                             <span class="btn-icon btn-clr-blue ps-2">
                                 <i class="bi bi-arrow-counterclockwise cursor-pointer" title="Return"
                                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                    aria-controls="offcanvasRight" (click)="onApprovalFlowClick('Return',item)"></i>
+                                    aria-controls="offcanvasRight" (click)="onApprovalFlowClick('Return','I',item)"></i>
                             </span>
                             <span class="btn-icon btn-clr-ash ps-2">
                                 <i class="bi bi-chat-left cursor-pointer" title="Collaboration"
                                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                    aria-controls="offcanvasRight" (click)="onApprovalFlowClick('Collaboration',item)"></i>
+                                    aria-controls="offcanvasRight"
+                                    (click)="onApprovalFlowClick('Collaboration','C',item)"></i>
                             </span>
 
                         </div>
@@ -58,11 +60,20 @@
     id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
         <h5 id="offcanvasRightLabel">{{approveRejectTitle}} </h5>
-        <button type="button" class="btn-close text-reset font-size-10" data-bs-dismiss="offcanvas"
-            aria-label="Close"></button>
+        <button type="button" (click)="closeApprove()" class="btn-close text-reset font-size-10"
+            data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        ...
+        <form [formGroup]="approvalForm">
+            <div class="form-group">
+                <textarea class="form-control" formControlName="approval" id="example1"
+                    placeholder="Enter the comments (Max 500)" minlength="2" maxlength="500" rows="3"></textarea>
+            </div>
+            <div class="mt-6 float-right">
+                <button type="button" (click)="onSubmit()" [disabled]="approvalForm.invalid"
+                    class="btn btn-primary">Submit</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -75,13 +86,25 @@
             aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <div *ngFor="let item of historyList">
+        <!-- <div *ngFor="let item of historyList">
             {{item.userRole}} -
             {{item.value}} -
             {{item.status}}
         </div>
         <div *ngIf="historyList.length==0">
             No history!
+        </div> -->
+        <div class="row">
+            <div class="col-xs-8 col-sm-4">
+                <div id="text1">
+                    <label>Text 1</label>
+                </div>
+            </div>
+            <div class="col-xs-8 col-sm-4">
+                <div id="text3">
+                    <label>Text 3</label>
+                </div>
+            </div>
         </div>
     </div>
 </div>
