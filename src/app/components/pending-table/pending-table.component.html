@@ -11,40 +11,35 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>test</td>
-                    <td>tests</td>
-                    <td>02-04-2024</td>
+                <tr *ngFor="let item of tableData; index as i;">
+                    <td>{{item.processName}}</td>
+                    <td>{{item.initiatedbyname}}</td>
+                    <td>{{item.processInitiatedDate}}</td>
                     <td>
                         <div class="d-flex">
                             <span class="btn-icon btn-clr-success">
-                                <i class="bi bi-journal-check cursor-pointer" data-toggle="tooltip" title="Approve" data-bs-toggle="offcanvas"
-                                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
-                                    (click)="allPopup('Approve')"></i>
+                                <i class="bi bi-journal-check cursor-pointer" data-toggle="tooltip" title="Approve"
+                                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                    aria-controls="offcanvasRight" (click)="onApprovalFlowClick('Approve',item)"></i>
                             </span>
                             <span class="btn-icon btn-clr-danger ps-2">
                                 <i class="bi bi-clipboard-x cursor-pointer" title="Reject" data-bs-toggle="offcanvas"
                                     data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
-                                    (click)="allPopup('Reject')"></i>
+                                    (click)="onApprovalFlowClick('Reject',item)"></i>
                             </span>
                             <span class="btn-icon btn-clr-blue ps-2">
                                 <i class="bi bi-arrow-counterclockwise cursor-pointer" title="Return"
                                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                    aria-controls="offcanvasRight" (click)="allPopup('Return')"></i>
-                            </span>
-                            <span class="btn-icon btn-clr-ash ps-2">
-                                <i class="bi bi-chat-left cursor-pointer" title="Collaboration"
-                                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                    aria-controls="offcanvasRight" (click)="allPopup('Collaboration')"></i>
-                            </span>
+                                    aria-controls="offcanvasRight" (click)="onApprovalFlowClick('Return',item)"></i>
+                            </span>                            
 
                         </div>
                     </td>
                     <td>
                         <span class="btn-icon btn-clr-blue">
                             <i class="bi bi-clock-history" title="History" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
-                                (click)="allPopup('History')"></i>
+                                data-bs-target="#ocHistory" aria-controls="ocHistory"
+                                (click)="onHistoryClick(item)"></i>
                         </span>
                     </td>
                 </tr>
@@ -53,6 +48,7 @@
     </div>
 </div>
 
+<!-- Approval/Reject/Return to initiator -  offcanvas -->
 <div class="offcanvas offcanvas-end" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
     id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
@@ -62,5 +58,25 @@
     </div>
     <div class="offcanvas-body">
         ...
+    </div>
+</div>
+
+<!-- History offcanvas -->
+<div class="offcanvas offcanvas-end" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" id="ocHistory"
+    aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">History</h5>
+        <button type="button" class="btn-close text-reset font-size-10" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div *ngFor="let item of historyList">
+            {{item.userRole}} -
+            {{item.value}} -
+            {{item.status}}
+        </div>
+        <div *ngIf="historyList.length==0">
+            No history!
+        </div>
     </div>
 </div>

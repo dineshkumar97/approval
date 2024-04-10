@@ -9,9 +9,21 @@ export class ApprovalItem {
     viewLink: string;
 }
 
-export interface ApprovalItemResponce extends ApprovalItem {
+export class ApprovalItemResponce extends ApprovalItem {
     hasApproval: boolean;
     hasReject: boolean;
     hasReturnInitiator: boolean;
     isCompleted: boolean;
+}
+
+export class ApprovalWorkFlowRequest {
+    processID: number;
+    currentFlowID: number;
+    comboKey: string;
+    packageID: string;
+    instanceID: string;
+    viewLink: string;
+    currentuserID: number;
+    remarks: string;
+    activityName: string;
 }
