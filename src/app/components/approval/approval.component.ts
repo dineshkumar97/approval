@@ -55,6 +55,7 @@ export class ApprovalComponent implements OnInit {
       this.data[index].isactive = false;
       this.approvalItems = [];
     });
+    this.title = null;
   }
 
   public onListItemClick(data: ApprovalListItem) {
