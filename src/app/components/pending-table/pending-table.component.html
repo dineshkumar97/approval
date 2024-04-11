@@ -50,10 +50,15 @@
                         </span>
                     </td>
                 </tr>
+                <tr class='no-records' *ngIf="isTableShow">
+                    <td colspan='5'>No record found</td>
+                </tr>
             </tbody>
+
         </table>
     </div>
 </div>
+<div class="loading" *ngIf="isLoading"></div>
 
 <!-- Approval/Reject/Return to initiator -  offcanvas -->
 <div class="offcanvas offcanvas-end" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -70,8 +75,8 @@
                     placeholder="Enter the comments (Max 500)" minlength="2" maxlength="500" rows="3"></textarea>
             </div>
             <div class="mt-6 float-right">
-                <button type="button" (click)="onSubmit()" [disabled]="approvalForm.invalid"
-                    class="btn btn-primary"><i class="bi bi-send"></i></button>
+                <button type="button" (click)="onSubmit()" [disabled]="approvalForm.invalid" class="btn btn-primary"><i
+                        class="bi bi-send"></i></button>
             </div>
         </form>
     </div>
@@ -92,8 +97,8 @@
                     placeholder="Enter the comments (Max 500)" minlength="2" maxlength="500" rows="3"></textarea>
             </div>
             <div class="mt-6 float-right">
-                <button type="button" (click)="onSubmit()" [disabled]="commentsForm.invalid"
-                    class="btn btn-primary"><i class="bi bi-send"></i></button>
+                <button type="button" (click)="onSubmit()" [disabled]="commentsForm.invalid" class="btn btn-primary"><i
+                        class="bi bi-send"></i></button>
             </div>
         </form>
     </div>
@@ -118,7 +123,7 @@
         </div> -->
         <div class="row " *ngFor="let item of historyList">
             <div class="col-xs-6 col-sm-8">
-                <div id="text1" >
+                <div id="text1">
                     <span class="hitory-comments">{{item.direction}}</span>
                     <br>
                     <label class="history-subtitle">{{item.value}} </label>
@@ -129,9 +134,9 @@
                     <span> {{item.status}}</span>
                 </div>
             </div>
-           
+
             <div class="col-xs-6 col-sm-8 mt-6">
-                <div id="text1" >
+                <div id="text1">
                     <span class="hitory-comments">Comments</span>
                     <br>
                     <label class="m-t-b-3">{{item.value}} </label>
@@ -142,7 +147,7 @@
                     <span class="float-right"> 10-11-1111 11:11 am</span>
                 </div>
             </div>
-            
+
             <hr>
         </div>
     </div>

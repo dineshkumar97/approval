@@ -23,6 +23,8 @@ export class PendingTableComponent implements OnInit {
   public commentsForm: FormGroup;
   public approvalData: any;
   public userId: string;
+  public isTableShow = true;
+  public isLoading = false;
   constructor(private service: ApprovalService, private fb: FormBuilder) {
     this.userId = "73";
   }
@@ -32,7 +34,10 @@ export class PendingTableComponent implements OnInit {
     this.initilization();
   }
 
-
+  ngOnChanges() {
+    console.log('data', this.tableData);
+    this.isTableShow = this.tableData?.length > 0 ? false : true;
+  }
 
   public initilization(): void {
     this.loadApprovalForm();

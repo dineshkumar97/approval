@@ -3,7 +3,7 @@
     <div class="row mt-2">
         <div class="col-lg-12 col-md-12 col-12">
             <h3 class="mb-0 mt-2 text-white d-flex"> <i class="bi bi-card-list mr-10"></i>
-                {{pending?'Pending ':'Completed  '}} {{title}}
+                {{pending?'Pending ':'Completed '}} {{title}}
             </h3>
         </div>
     </div>
@@ -31,11 +31,16 @@
             <div class="white-block mt-6">
                 <ul class="top-cat-list">
                     <li *ngFor="let list of data">
-                        <div [className]="list.isactive?'top-cat-list__title active':'top-cat-list__title'"
+                        <div [className]="list.isactive ? 'top-cat-list__title active' : 'top-cat-list__title'"
                             (click)="onListItemClick(list)">
                             <span class="sub_title"> {{list.processName}} </span> <span
                                 class="border-shapes">{{list.processTotal }}
                             </span>
+                        </div>
+                    </li>
+                    <li *ngIf="isPendingList">
+                        <div class="top-cat-list__title justify-content-center" >
+                            <span class="sub_title">No record found</span>
                         </div>
                     </li>
                 </ul>

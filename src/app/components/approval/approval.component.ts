@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PendingTableComponent } from '../pending-table/pending-table.component';
-import { NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ApprovalService } from '../../services/approval.service';
 import { ApprovalListItem, ApprovalListItemResponce } from '../../models/approvalListItem';
 import { ApprovalItemResponce } from '../../models/approvalItem';
@@ -8,7 +8,7 @@ import { ApprovalItemResponce } from '../../models/approvalItem';
 @Component({
   selector: 'app-approval',
   standalone: true,
-  imports: [PendingTableComponent, NgFor],
+  imports: [PendingTableComponent,CommonModule],
   templateUrl: './approval.component.html',
   styleUrl: './approval.component.scss'
 })
@@ -21,6 +21,7 @@ export class ApprovalComponent implements OnInit {
 
   public pending = false;
   public completed = false;
+  public isPendingList = true;
   public approvalItems: ApprovalItemResponce[];
 
   constructor(private service: ApprovalService) {
@@ -46,9 +47,14 @@ export class ApprovalComponent implements OnInit {
 
 
   public pendingCompleted(message: any): void {
+    this.isPendingList = false;
     this.pending = message == 'Pending' ? true : false;
     this.completed = message == 'Completed' ? true : false;
     this.data = message == "Pending" ? this.listitems.pending : this.listitems.completed;
+    this.data.forEach((active: any, index: any) => {
+      this.data[index].isactive = false;
+      this.approvalItems = [];
+    });
   }
 
   public onListItemClick(data: ApprovalListItem) {
