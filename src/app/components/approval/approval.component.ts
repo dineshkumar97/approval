@@ -41,6 +41,7 @@ export class ApprovalComponent implements OnInit {
         this.listitems = x;
         this.listitems.pending.forEach(x => x.processTotal = x.processTotal.replace("(", "").replace(")", ""));
         this.listitems.completed.forEach(x => x.processTotal = x.processTotal.replace("(", "").replace(")", ""));
+        this.data =  this.listitems.pending;
       }, error: err => console.log(err)
     })
   }
