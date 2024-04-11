@@ -55,7 +55,7 @@ export class ApprovalComponent implements OnInit {
     let index = this.data.findIndex(x => x.processID == data.processID);
     this.data.forEach(x => x.isactive = false);
     this.data[index].isactive = true;
-    this.title = data.processName;
+    this.title = `${'-'} ${data.processName}`;
     this.service.GetApprovalItem(this.userId, data.processID).subscribe({
       next: x => {
         this.approvalItems = x;

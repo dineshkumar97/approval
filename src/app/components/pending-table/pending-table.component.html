@@ -35,7 +35,7 @@
                             </span>
                             <span class="btn-icon btn-clr-ash ps-2">
                                 <i class="bi bi-chat-left cursor-pointer" title="Collaboration"
-                                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                    data-bs-toggle="offcanvas" data-bs-target="#commentscanvas"
                                     aria-controls="offcanvasRight"
                                     (click)="onApprovalFlowClick('Collaboration','C',item)"></i>
                             </span>
@@ -60,7 +60,7 @@
     id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
         <h5 id="offcanvasRightLabel">{{approveRejectTitle}} </h5>
-        <button type="button" (click)="closeApprove()" class="btn-close text-reset font-size-10"
+        <button #closeModal type="button" (click)="closeApprove()" class="btn-close text-reset font-size-10"
             data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
@@ -71,7 +71,29 @@
             </div>
             <div class="mt-6 float-right">
                 <button type="button" (click)="onSubmit()" [disabled]="approvalForm.invalid"
-                    class="btn btn-primary">Submit</button>
+                    class="btn btn-primary"><i class="bi bi-send"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- comments offcanvas -->
+
+<div class="offcanvas offcanvas-end" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    id="commentscanvas" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">{{approveRejectTitle}} </h5>
+        <button #closeModalComments type="button" (click)="closeApprove()" class="btn-close text-reset font-size-10"
+            data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form [formGroup]="commentsForm">
+            <div class="form-group">
+                <textarea class="form-control" formControlName="comments" id="example1"
+                    placeholder="Enter the comments (Max 500)" minlength="2" maxlength="500" rows="3"></textarea>
+            </div>
+            <div class="mt-6 float-right">
+                <button type="button" (click)="onSubmit()" [disabled]="commentsForm.invalid"
+                    class="btn btn-primary"><i class="bi bi-send"></i></button>
             </div>
         </form>
     </div>
@@ -94,17 +116,34 @@
         <div *ngIf="historyList.length==0">
             No history!
         </div> -->
-        <div class="row">
-            <div class="col-xs-8 col-sm-4">
-                <div id="text1">
-                    <label>Text 1</label>
+        <div class="row " *ngFor="let item of historyList">
+            <div class="col-xs-6 col-sm-8">
+                <div id="text1" >
+                    <span class="hitory-comments">{{item.direction}}</span>
+                    <br>
+                    <label class="history-subtitle">{{item.value}} </label>
                 </div>
             </div>
-            <div class="col-xs-8 col-sm-4">
+            <div class="col-xs-6 col-sm-4">
+                <div id="text3" class="status">
+                    <span> {{item.status}}</span>
+                </div>
+            </div>
+           
+            <div class="col-xs-6 col-sm-8 mt-6">
+                <div id="text1" >
+                    <span class="hitory-comments">Comments</span>
+                    <br>
+                    <label class="m-t-b-3">{{item.value}} </label>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 mt-6">
                 <div id="text3">
-                    <label>Text 3</label>
+                    <span class="float-right"> 10-11-1111 11:11 am</span>
                 </div>
             </div>
+            
+            <hr>
         </div>
     </div>
 </div>

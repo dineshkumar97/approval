@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, input } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, input } from '@angular/core';
 import { ApprovalItemResponce } from '../../models/approvalItem';
 import { CommonModule } from '@angular/common';
 import { ApprovalService } from '../../services/approval.service';
@@ -15,10 +15,12 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 export class PendingTableComponent implements OnInit {
 
   @Input() tableData: ApprovalItemResponce[] = [];
-
+  @ViewChild('closeModal') closeModal: ElementRef;
+  @ViewChild('closeModalComments') closeModalComments: ElementRef;
   public approveRejectTitle: any;
   public historyList: History[] = [];
   public approvalForm: FormGroup;
+  public commentsForm: FormGroup;
   public approvalData: any;
   public userId: string;
   constructor(private service: ApprovalService, private fb: FormBuilder) {
@@ -39,6 +41,9 @@ export class PendingTableComponent implements OnInit {
   public loadApprovalForm(): void {
     this.approvalForm = this.fb.group({
       approval: [null, Validators.required]
+    });
+    this.commentsForm = this.fb.group({
+      comments: [null, Validators.required]
     })
   }
 
@@ -84,10 +89,12 @@ export class PendingTableComponent implements OnInit {
         currentFlowID: this.approvalData.currentFlowID,
         instanceID: this.approvalData.instanceID,
         currentuserID: this.userId,
-        comments: this.approvalForm.value.approval,
+        comments: this.commentsForm.value.comments,
       }
       this.service.SetComment(json).subscribe({
         next: response => {
+          this.closeApproveComments('C');
+          alert('Saved Successfully')
         }, error: err => console.log(err)
       });
     } else {
@@ -104,6 +111,10 @@ export class PendingTableComponent implements OnInit {
       }
       this.service.SetApprovalWorkflow(json).subscribe({
         next: response => {
+          if(response){
+            this.closeApproveComments(this.activityName);
+            alert('Saved Successfully')
+          }
         }, error: err => console.log(err)
       });
     }
@@ -111,5 +122,17 @@ export class PendingTableComponent implements OnInit {
 
   public closeApprove(): void {
     this.approvalForm.reset();
+    this.commentsForm.reset();
   }
+
+  public closeApproveComments(message: string): void {
+    if (message === 'C') {
+      this.commentsForm.reset();
+      this.closeModalComments.nativeElement.click();
+    } else {
+      this.approvalForm.reset();
+      this.closeModal.nativeElement.click();
+    }
+  }
+
 }
