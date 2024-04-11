@@ -19,24 +19,25 @@
                         <div class="d-flex">
                             <span class="btn-icon btn-clr-success">
                                 <i class="bi bi-journal-check cursor-pointer" data-toggle="tooltip" title="Approve"
-                                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" ngbTooltip="Approve"
                                     aria-controls="offcanvasRight"
                                     (click)="onApprovalFlowClick('Approve','F',item)"></i>
                             </span>
                             <span class="btn-icon btn-clr-danger ps-2">
                                 <i class="bi bi-clipboard-x cursor-pointer" title="Reject" data-bs-toggle="offcanvas"
-                                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
+                                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" ngbTooltip="Reject"
                                     (click)="onApprovalFlowClick('Reject','R',item)"></i>
                             </span>
                             <span class="btn-icon btn-clr-blue ps-2">
                                 <i class="bi bi-arrow-counterclockwise cursor-pointer" title="Return"
                                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                    aria-controls="offcanvasRight" (click)="onApprovalFlowClick('Return','I',item)"></i>
+                                    ngbTooltip="Return to initiator" aria-controls="offcanvasRight"
+                                    (click)="onApprovalFlowClick('Return','I',item)"></i>
                             </span>
                             <span class="btn-icon btn-clr-ash ps-2">
                                 <i class="bi bi-chat-left cursor-pointer" title="Collaboration"
                                     data-bs-toggle="offcanvas" data-bs-target="#commentscanvas"
-                                    aria-controls="offcanvasRight"
+                                    aria-controls="offcanvasRight" ngbTooltip="Collaboration"
                                     (click)="onApprovalFlowClick('Collaboration','C',item)"></i>
                             </span>
 
@@ -81,8 +82,8 @@
         </form>
     </div>
 </div>
-<!-- comments offcanvas -->
 
+<!-- comments offcanvas -->
 <div class="offcanvas offcanvas-end" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
     id="commentscanvas" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
@@ -91,14 +92,27 @@
             data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <form [formGroup]="commentsForm">
-            <div class="form-group">
-                <textarea class="form-control" formControlName="comments" id="example1"
+        <div>
+            <ul class="chat">
+                <li *ngFor="let item of commentList; index as i;">
+                    <div class="chat-body">
+                        <div><strong>{{item.createdByName}}</strong>
+                            <small class="text-muted float-right">{{item.createdDate|date:"dd-MMM-yyyy"}}</small>
+                        </div>
+                        <p>{{item.notes}}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <form [formGroup]="commentsForm" class="chat-input">
+            <div class="input-group">
+                <textarea class="form-control" formControlName="comments" id="example1" type="text"
                     placeholder="Enter the comments (Max 500)" minlength="2" maxlength="500" rows="3"></textarea>
-            </div>
-            <div class="mt-6 float-right">
-                <button type="button" (click)="onSubmit()" [disabled]="commentsForm.invalid" class="btn btn-primary"><i
-                        class="bi bi-send"></i></button>
+                <div class="input-group-append m-auto">
+                    <button type="button" (click)="onSubmit()" [disabled]="commentsForm.invalid"
+                        class="btn btn-primary">
+                        <i class="bi bi-send"></i></button>
+                </div>
             </div>
         </form>
     </div>

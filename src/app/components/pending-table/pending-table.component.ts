@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';
 import { ApprovalService } from '../../services/approval.service';
 import { History } from '../../models/history';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommentResponse } from '../../models/commentresponse';
 
 @Component({
   selector: 'app-pending-table',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbTooltipModule],
   templateUrl: './pending-table.component.html',
   styleUrl: './pending-table.component.scss'
 })
@@ -18,13 +20,15 @@ export class PendingTableComponent implements OnInit {
   @ViewChild('closeModal') closeModal: ElementRef;
   @ViewChild('closeModalComments') closeModalComments: ElementRef;
   public approveRejectTitle: any;
+  public commentList: CommentResponse[];
   public historyList: History[] = [];
   public approvalForm: FormGroup;
   public commentsForm: FormGroup;
-  public approvalData: any;
+  public approvalData: ApprovalItemResponce;
   public userId: string;
   public isTableShow = true;
   public isLoading = false;
+
   constructor(private service: ApprovalService, private fb: FormBuilder) {
     this.userId = "73";
   }
@@ -70,6 +74,7 @@ export class PendingTableComponent implements OnInit {
       case "Collaboration":
         this.approveRejectTitle = wrokflowType;
         this.activityName = activityName;
+        this.loadComment(data);
         break;
     }
   }
@@ -77,9 +82,9 @@ export class PendingTableComponent implements OnInit {
   public onHistoryClick(data: ApprovalItemResponce) {
     this.historyList = [];
     this.service.GetHistory(data.instanceID, data.processID.toString()).subscribe({
-      next: x => {
+      next: (x: History[]) => {
         this.historyList = x;
-      }, error: err => console.log(err)
+      }, error: (err: any) => console.log(err)
     });
   }
 
@@ -87,7 +92,7 @@ export class PendingTableComponent implements OnInit {
     this.approvalCommit();
   }
 
-  approvalCommit():void{
+  approvalCommit(): void {
     if (this.approveRejectTitle === 'Collaboration') {
       const json: any = {
         currentFlowID: this.approvalData.currentFlowID,
@@ -96,10 +101,10 @@ export class PendingTableComponent implements OnInit {
         comments: this.commentsForm.value.comments,
       }
       this.service.SetComment(json).subscribe({
-        next: response => {
-          this.closeApproveComments('C');
+        next: (response: boolean) => {
+          this.loadComment(this.approvalData);
           alert('Saved Successfully')
-        }, error: err => console.log(err)
+        }, error: (err: any) => console.log(err)
       });
     } else {
       const json: any = {
@@ -114,12 +119,12 @@ export class PendingTableComponent implements OnInit {
         activityName: this.activityName,
       }
       this.service.SetApprovalWorkflow(json).subscribe({
-        next: response => {
-          if(response){
+        next: (response: boolean) => {
+          if (response) {
             this.closeApproveComments(this.activityName);
             alert('Saved Successfully')
           }
-        }, error: err => console.log(err)
+        }, error: (err: any) => console.log(err)
       });
     }
   }
@@ -137,6 +142,14 @@ export class PendingTableComponent implements OnInit {
       this.approvalForm.reset();
       this.closeModal.nativeElement.click();
     }
+  }
+
+  loadComment(data: ApprovalItemResponce) {
+    this.service.GetComment(data.instanceID, data.processID.toString()).subscribe({
+      next: (x: CommentResponse[]) => {
+        this.commentList = x;
+      }, error: (err: any) => console.log(err)
+    });
   }
 
 }

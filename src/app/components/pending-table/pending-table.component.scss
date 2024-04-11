@@ -1,21 +1,64 @@
 .loading {
-    height: 0;
-    width: 0;
-    padding: 15px;
-    border: 6px solid #ccc;
-    border-right-color: #888;
-    border-radius: 22px;
-    -webkit-animation: rotate 1s infinite linear;
-    /* left, top and position just for the demo! */
-    position: absolute;
-    left: 50%;
-    top: 50%;
-  }
-  
-  @-webkit-keyframes rotate {
-    /* 100% keyframe for  clockwise. 
+  height: 0;
+  width: 0;
+  padding: 15px;
+  border: 6px solid #ccc;
+  border-right-color: #888;
+  border-radius: 22px;
+  -webkit-animation: rotate 1s infinite linear;
+  /* left, top and position just for the demo! */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+@-webkit-keyframes rotate {
+
+  /* 100% keyframe for  clockwise. 
        use 0% instead for anticlockwise */
-    100% {
-      -webkit-transform: rotate(360deg);
-    }
+  100% {
+    -webkit-transform: rotate(360deg);
   }
+}
+
+
+
+// chat 
+
+.chat {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 80px;
+}
+
+.chat li {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  margin-top: 10px;
+  width: 80%;
+}
+
+.chat-body {
+  display: inline-block;
+  width: 80%;
+  max-width: 90%;
+  background-color: #FFFADE;
+  border-radius: 12.5px;
+  padding: 10px;
+}
+
+.chat-body strong {
+  color: #802081;
+}
+
+.chat-input {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  margin: auto;
+  padding: 2px;
+  padding-right: 20px;
+}
