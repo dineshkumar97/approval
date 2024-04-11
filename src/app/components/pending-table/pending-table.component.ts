@@ -35,7 +35,6 @@ export class PendingTableComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log('data', this.tableData);
     this.isTableShow = this.tableData?.length > 0 ? false : true;
   }
 
