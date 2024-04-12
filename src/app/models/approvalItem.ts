@@ -14,6 +14,9 @@ export class ApprovalItemResponce extends ApprovalItem {
     hasReject: boolean;
     hasReturnInitiator: boolean;
     isCompleted: boolean;
+    approval: any;
+    reject:any;
+    returnToInitiator:any;
 }
 
 export class ApprovalWorkFlowRequest {

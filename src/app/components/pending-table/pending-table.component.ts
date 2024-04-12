@@ -17,6 +17,7 @@ import { CommentResponse } from '../../models/commentresponse';
 export class PendingTableComponent implements OnInit {
 
   @Input() tableData: ApprovalItemResponce[] = [];
+  @Input() status: any;
   @ViewChild('closeModal') closeModal: ElementRef;
   @ViewChild('closeModalComments') closeModalComments: ElementRef;
   public approveRejectTitle: any;
@@ -24,7 +25,8 @@ export class PendingTableComponent implements OnInit {
   public historyList: History[] = [];
   public approvalForm: FormGroup;
   public commentsForm: FormGroup;
-  public approvalData: ApprovalItemResponce;
+  public approvalData:any;
+  public comboKey:any;
   public userId: string;
   public isTableShow = true;
   public isLoading = false;
@@ -58,18 +60,22 @@ export class PendingTableComponent implements OnInit {
   activityName: string;
   public onApprovalFlowClick(wrokflowType: string, activityName: string, data: ApprovalItemResponce): void {
     this.approvalData = data;
+    console.log("onApprovalFlowClick",this.approvalData)
     switch (wrokflowType) {
       case "Approve":
-        this.approveRejectTitle = wrokflowType;
+        this.approveRejectTitle = this.approvalData?.approval?.comboDisplay;
         this.activityName = activityName;
+        this.comboKey = this.approvalData?.approval?.processflowID;
         break;
       case "Reject":
-        this.approveRejectTitle = wrokflowType;
+        this.approveRejectTitle = this.approvalData?.reject?.comboDisplay;
         this.activityName = activityName;
+        this.comboKey = this.approvalData?.reject?.processflowID;
         break;
       case "Return":
-        this.approveRejectTitle = wrokflowType;
+        this.approveRejectTitle = this.approvalData?.returnToInitiator?.comboDisplay;
         this.activityName = activityName;
+        this.comboKey = this.approvalData?.returnToInitiator?.processflowID;
         break;
       case "Collaboration":
         this.approveRejectTitle = wrokflowType;
@@ -84,6 +90,10 @@ export class PendingTableComponent implements OnInit {
     this.service.GetHistory(data.instanceID, data.processID.toString()).subscribe({
       next: (x: History[]) => {
         this.historyList = x;
+        this.historyList.forEach((element:any,index:any)=>{
+          this.historyList[index].activity = element.activity == null ? '-' : element.activity;
+          this.historyList[index].activityCompletionDate = element.activityCompletionDate == null ? '-' : element.activityCompletionDate;
+        })
       }, error: (err: any) => console.log(err)
     });
   }
@@ -110,7 +120,7 @@ export class PendingTableComponent implements OnInit {
       const json: any = {
         processID: this.approvalData.processID,
         currentFlowID: this.approvalData.currentFlowID,
-        comboKey: this.activityName,
+        comboKey: this.comboKey,
         packageID: this.approvalData.processPackageID,
         instanceID: this.approvalData.instanceID,
         viewLink: this.approvalData.viewLink,

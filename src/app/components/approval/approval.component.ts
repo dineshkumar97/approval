@@ -23,7 +23,7 @@ export class ApprovalComponent implements OnInit {
   public completed = false;
   public isPendingList = true;
   public approvalItems: ApprovalItemResponce[];
-
+  public statusMessage: string;
   constructor(private service: ApprovalService) {
     this.userId = "73";
   }
@@ -42,6 +42,7 @@ export class ApprovalComponent implements OnInit {
         this.listitems.pending.forEach(x => x.processTotal = x.processTotal.replace("(", "").replace(")", ""));
         this.listitems.completed.forEach(x => x.processTotal = x.processTotal.replace("(", "").replace(")", ""));
         this.data =  this.listitems.pending;
+        this.statusMessage = 'Pending';
       }, error: err => console.log(err)
     })
   }
@@ -57,6 +58,7 @@ export class ApprovalComponent implements OnInit {
       this.approvalItems = [];
     });
     this.title = null;
+    this.statusMessage = message;
   }
 
   public onListItemClick(data: ApprovalListItem) {
