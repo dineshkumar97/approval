@@ -9,7 +9,7 @@
             <li *ngFor="let item of commentList; index as i;">
                 <div class="chat-body">
                     <div><strong>{{item.createdByName}}</strong>
-                        <small class="text-muted float-right">{{item.createdDate|date:"dd-MMM-yyyy"}}</small>
+                        <small class="text-muted float-right">{{item.createdDate}}</small>
                     </div>
                     <p>{{item.notes}}</p>
                 </div>

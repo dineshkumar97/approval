@@ -5,7 +5,6 @@ export class History {
     value: string;
     status: string;
     activityCompletionDate: string;
-    activity: string;
-    completed: string;
+    ActivityCompletedBy: string;
     processFlowID: string;
 }
