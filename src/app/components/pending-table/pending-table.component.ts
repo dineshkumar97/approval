@@ -73,7 +73,6 @@ export class PendingTableComponent implements OnInit, OnDestroy {
   public isDisableReturn = false;
   public onApprovalFlowClick(wrokflowType: string, activityName: string, data: ApprovalPendingItem): void {
     this.approvalData = data;
-    console.log("onApprovalFlowClick", this.approvalData)
     switch (wrokflowType) {
       case "Approve":
         this.approveRejectTitle = this.approvalData?.approval?.comboDisplay;
@@ -115,7 +114,7 @@ export class PendingTableComponent implements OnInit, OnDestroy {
   public onSubmit(): void {
     let comboKey: any
     if (this.approveRejectTitle == 'Return / Return to Initiator') {
-      comboKey = this.isReturnInitator ? 'Return to Initiator' : 'Return'
+      comboKey = this.isReturnInitator ? this.approvalData?.returnToInitiator?.processflowID : this.approvalData?.return?.processflowID;
     } else {
       comboKey = this.comboKey;
     }
