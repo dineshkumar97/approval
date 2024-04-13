@@ -73,6 +73,8 @@ export class ApprovalComponent implements OnInit {
     this.data.forEach(x => x.isactive = false);
     this.data[index].isactive = true;
     this.title = `${'-'} ${data.processName}`;
+    let url =  this.statusMessage == 'Pending' ? "pending" : "completed";
+    this.router.navigate([url], { relativeTo: this.route, queryParams: { userId: this.userId } })
   }
 
 }

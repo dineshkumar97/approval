@@ -5,7 +5,7 @@ import { ApprovalCompletedItem } from '../../models/approvalItem';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbOffcanvas, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApprovalService } from '../../services/approval.service';
 import { HistoryComponent } from '../history/history.component';
 import { CommentComponent } from '../comment/comment.component';
@@ -25,6 +25,7 @@ export class CompletedTableComponent implements OnInit, OnDestroy {
   private offcanvasService = inject(NgbOffcanvas);
 
   constructor(private sharedService: SharedService, private route: ActivatedRoute,
+    private router: Router,
     private service: ApprovalService) {
     this.userId = this.route.snapshot.queryParamMap.get('userId') ?? '';
   }
@@ -57,5 +58,10 @@ export class CompletedTableComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+
+  public viewDetails(): void {
+    this.router.navigate(['/approval/detail'], {  queryParams: { userId: this.userId ,status:'completed' } });
   }
 }

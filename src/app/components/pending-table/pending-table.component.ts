@@ -1,17 +1,14 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, inject, input } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { ApprovalPendingItem } from '../../models/approvalItem';
 import { CommonModule } from '@angular/common';
 import { ApprovalService } from '../../services/approval.service';
-import { History } from '../../models/history';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbOffcanvas, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import { CommentResponse } from '../../models/commentresponse';
 import { HistoryComponent } from '../history/history.component';
 import { CommentComponent } from '../comment/comment.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SharedService } from '../../services/shared.service';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-pending-table',
@@ -34,10 +31,9 @@ export class PendingTableComponent implements OnInit, OnDestroy {
   public isLoading = false;
   private offcanvasService = inject(NgbOffcanvas);
   public activityName: string;
-  public detailsView: SafeResourceUrl;
 
   constructor(private service: ApprovalService, private sharedService: SharedService,
-    private safe: DomSanitizer,
+    private router: Router,
     private fb: FormBuilder, private route: ActivatedRoute) {
     this.userId = this.route.snapshot.queryParamMap.get('userId') ?? '';
   }
@@ -149,9 +145,8 @@ export class PendingTableComponent implements OnInit, OnDestroy {
   }
 
 
-  public viewDetails(details: any): void {
-    const url = 'https://icons.getbootstrap.com/';
-    this.detailsView = this.safe.bypassSecurityTrustResourceUrl(url)
+  public viewDetails(): void {
+    this.router.navigate(['/approval/detail'], {  queryParams: { userId: this.userId ,status:'pending' } });
   }
 
 }

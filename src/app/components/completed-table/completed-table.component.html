@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card mb-3">
     <div class="card-body overflow-auto">
         <table class="table table-sm table-hover">
             <thead>
@@ -13,11 +13,11 @@
             <tbody>
                 <tr *ngFor="let item of tableData; index as i;">
                     <td>{{item.processName}}<br>
-                        <span class="hyper-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop">View Details
+                        <span class="hyper-link"  (click)="viewDetails()">View Details
                         </span>
                     </td>
                     <td>{{item.initiatedbyname}}</td>
-                    <td>{{item.processInitiatedDate | date:"dd-MMM-yyyy"}}</td>
+                    <td>{{item.processInitiatedDate | date:"dd-MM-yyyy"}}</td>
                     <td>
                         <div class="d-flex">
                             <span class="btn-icon btn-clr-ash ps-2">
