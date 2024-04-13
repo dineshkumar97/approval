@@ -131,6 +131,8 @@ export class PendingTableComponent implements OnInit, OnDestroy {
           this.approvalForm.reset();
           this.closeModal.nativeElement.click();
           alert('Saved Successfully')
+          this.sharedService.isTabRefresh.next(true);
+          this.loadData();
         }
       }, error: (err: any) => console.log(err)
     });

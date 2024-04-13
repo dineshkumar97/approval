@@ -7,6 +7,7 @@ import { ApprovalCompletedItem, ApprovalPendingItem } from "../models/approvalIt
 })
 export class SharedService {
     private processsub = new BehaviorSubject<string | null>(null);
+    public isTabRefresh = new BehaviorSubject<boolean | null>(null);
     processId = this.processsub.asObservable();
     private completedListSub = new BehaviorSubject<ApprovalCompletedItem | null>(null);
     completedList = this.completedListSub.asObservable();

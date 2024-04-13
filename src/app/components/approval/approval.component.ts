@@ -22,7 +22,6 @@ export class ApprovalComponent implements OnInit {
   public data: ApprovalListItem[] = [];
 
   public pending = false;
-  public completed = false;
   public isPendingList = true;
   public statusMessage: string;
 
@@ -31,22 +30,29 @@ export class ApprovalComponent implements OnInit {
     private sharedService: SharedService,
     private router: Router) {
     this.userId = this.route.snapshot.queryParamMap.get('userId') ?? '';
+    this.sharedService.isTabRefresh.subscribe((response)=>{
+      if(response){
+        this.loadApprovalListItem();
+      }
+    })
   }
 
 
   ngOnInit(): void {
     this.pending = true;
-    this.completed = false;
     this.loadApprovalListItem();
+  
   }
 
   loadApprovalListItem() {
     this.service.GetApprovalListItem(this.userId).subscribe({
       next: x => {
         this.listitems = x;
+        let tabStatus: any = sessionStorage.getItem('tabStatus')
+        this.pending = tabStatus === 'Completed' ? false : true;
         this.listitems.pending.forEach(x => x.processTotal = x.processTotal.replace("(", "").replace(")", ""));
         this.listitems.completed.forEach(x => x.processTotal = x.processTotal.replace("(", "").replace(")", ""));
-        this.data = this.listitems.pending;
+        this.data = tabStatus == null ? this.listitems.pending :tabStatus == 'Pending' ?this.listitems.pending:this.listitems.completed
         this.statusMessage = 'Pending';
       }, error: err => console.log(err)
     })
@@ -56,7 +62,6 @@ export class ApprovalComponent implements OnInit {
   public pendingCompleted(message: any): void {
     this.isPendingList = false;
     this.pending = message == 'Pending' ? true : false;
-    this.completed = message == 'Completed' ? true : false;
     this.data = message == "Pending" ? this.listitems.pending : this.listitems.completed;
     this.data.forEach((active: any, index: any) => {
       this.data[index].isactive = false;
@@ -65,6 +70,7 @@ export class ApprovalComponent implements OnInit {
     this.statusMessage = message;
     let url = message == 'Pending' ? "pending" : "completed";
     this.router.navigate([url], { relativeTo: this.route, queryParams: { userId: this.userId } })
+    sessionStorage.setItem('tabStatus',message)
   }
 
   public onListItemClick(data: ApprovalListItem) {

@@ -19,10 +19,10 @@
                             </button>
                         </div>
                         <div class="width-50">
-                            <button class="btn m-l-17" [className]="!completed ? 'completed-bg' : 'pending-bg'"
+                            <button class="btn m-l-17" [className]="!pending ? 'pending-bg' : 'completed-bg'"
                                 (click)="pendingCompleted('Completed')">
                                 <span
-                                    [className]="!completed ? 'completed-bg-text' : 'pending-bg-text'">Completed</span>
+                                    [className]="!pending ? 'pending-bg-text' : 'completed-bg-text'">Completed</span>
                             </button>
                         </div>
                     </div>
