@@ -9,14 +9,25 @@ export class ApprovalItem {
     viewLink: string;
 }
 
-export class ApprovalItemResponce extends ApprovalItem {
-    hasApproval: boolean;
-    hasReject: boolean;
-    hasReturnInitiator: boolean;
+export class ApprovalPendingItem extends ApprovalItem {    
+    return: boolean;
     isCompleted: boolean;
     approval: any;
     reject:any;
     returnToInitiator:any;
+}
+
+
+export interface ApprovalCompletedItem extends ApprovalItem {
+    processDescription: string;
+    activityByID: number;
+    activitybyname: string;
+    activityInitiatedDate: string;
+    activityCompletedByID: number;
+    activityCompletedByName: string;
+    processInitiatedByID: string;
+    sLADuration: string;
+    processWorkFlowID: string;
 }
 
 export class ApprovalWorkFlowRequest {

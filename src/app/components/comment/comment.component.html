@@ -1,0 +1,29 @@
+<div class="offcanvas-header">
+    <h5 id="offcanvas-title offcanvasRightLabel">Comment</h5>
+    <button type="button" (click)="activeOffcanvas.dismiss('Cross click')"
+        class="btn-close text-reset font-size-10"></button>
+</div>
+<div class="offcanvas-body">
+    <div>
+        <ul class="chat">
+            <li *ngFor="let item of commentList; index as i;">
+                <div class="chat-body">
+                    <div><strong>{{item.createdByName}}</strong>
+                        <small class="text-muted float-right">{{item.createdDate|date:"dd-MMM-yyyy"}}</small>
+                    </div>
+                    <p>{{item.notes}}</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <form [formGroup]="commentsForm" class="chat-input">
+        <div class="input-group">
+            <textarea class="form-control" formControlName="comments" id="example1" type="text"
+                placeholder="Enter the comments (Max 500)" minlength="2" maxlength="500" rows="3"></textarea>
+            <div class="input-group-append m-auto">
+                <button type="button" (click)="onSubmit()" [disabled]="commentsForm.invalid" class="btn btn-primary">
+                    <i class="bi bi-send"></i></button>
+            </div>
+        </div>
+    </form>
+</div>

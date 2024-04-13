@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ApprovalListItemResponce } from '../models/approvalListItem';
 import { Observable } from 'rxjs';
-import { ApprovalItemResponce, ApprovalWorkFlowRequest } from '../models/approvalItem';
+import { ApprovalCompletedItem, ApprovalPendingItem, ApprovalWorkFlowRequest } from '../models/approvalItem';
 import { CommentRequest } from '../models/commentrequest';
 import { History } from '../models/history';
 import { CommentResponse } from '../models/commentresponse';
@@ -21,8 +21,12 @@ export class ApprovalService {
     return this.http.get<ApprovalListItemResponce>(this.apiUrl + "approval/GetListItem?userId=" + userid);
   }
 
-  GetApprovalItem(userId: string, processId: string): Observable<ApprovalItemResponce[]> {
-    return this.http.get<ApprovalItemResponce[]>(this.apiUrl + "approval/GetApprovalListByProcessId?userId=" + userId + "&processId=" + processId);
+  GetApprovalPendingItem(userId: string, processId: string): Observable<ApprovalPendingItem[]> {
+    return this.http.get<ApprovalPendingItem[]>(this.apiUrl + "approval/GetApprovalPendingList?userId=" + userId + "&processId=" + processId);
+  }
+
+  GetApprovalCompletedItem(userId: string, processId: string): Observable<ApprovalCompletedItem[]> {
+    return this.http.get<ApprovalCompletedItem[]>(this.apiUrl + "approval/GetApprovalCompletedList?userId=" + userId + "&processId=" + processId);
   }
 
   GetHistory(instanceId: string, processId: string): Observable<History[]> {

@@ -1,0 +1,34 @@
+<div class="offcanvas-header">
+    <h5 id="offcanvas-title offcanvasRightLabel">History</h5>
+    <button type="button" class="btn-close text-reset font-size-10" (click)="activeOffcanvas.dismiss('Cross click')"></button>
+</div>
+<div class="offcanvas-body">
+    <div class="row " *ngFor="let item of historyList">
+        <div class="col-xs-6 col-sm-8">
+            <div id="text1">
+                <span class="hitory-comments">{{item.direction}}</span>
+                <br>
+                <label class="history-subtitle">{{item.value}} </label>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-4">
+            <div id="text3" class="status">
+                <span> {{item.status}}</span>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-8 mt-6">
+            <div id="text1">
+                <span class="hitory-comments">{{item.activity}}</span>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 mt-6">
+            <div id="text3">
+                <span class="float-right"><i class="bi bi-calendar-check-fill"></i> {{item.activityCompletionDate}}
+                </span>
+            </div>
+        </div>
+
+        <hr>
+    </div>
+</div>
