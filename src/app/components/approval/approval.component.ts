@@ -63,6 +63,8 @@ export class ApprovalComponent implements OnInit {
     });
     this.title = null;
     this.statusMessage = message;
+    let url = message == 'Pending' ? "pending" : "completed";
+    this.router.navigate([url], { relativeTo: this.route, queryParams: { userId: this.userId } })
   }
 
   public onListItemClick(data: ApprovalListItem) {
@@ -70,7 +72,7 @@ export class ApprovalComponent implements OnInit {
     this.sharedService.setProcessId(data.processID);
     this.data.forEach(x => x.isactive = false);
     this.data[index].isactive = true;
-    this.title = `${'-'} ${data.processName}`;    
+    this.title = `${'-'} ${data.processName}`;
   }
 
 }

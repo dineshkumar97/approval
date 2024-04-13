@@ -4,33 +4,18 @@
         (click)="activeOffcanvas.dismiss('Cross click')"></button>
 </div>
 <div class="offcanvas-body">
-    <div class="row " *ngFor="let item of historyList">
-        <div class="col-xs-6 col-sm-8">
-            <div id="text1">
-                <span class="hitory-comments">{{item.direction}}</span>
-                <br>
-                <label class="history-subtitle">{{item.value}} </label>
-            </div>
+    <div class="alert alert-warning mb-1 p-2" *ngFor="let item of historyList">
+        <div class="hitory-comments">{{item.direction}}</div>
+        <div class="pt-1 pb-1">
+            <strong>{{item.value}}</strong>
+            <small class="text-muted float-right text-white">
+                <span
+                    [ngClass]="item.status=='Completed'?'status':(item.status=='Reject')?'status bg-danger':'status bg-info'">
+                    {{item.status}}</span>
+            </small>
         </div>
-        <div class="col-xs-6 col-sm-4">
-            <div id="text3" class="status">
-                <span> {{item.status}}</span>
-            </div>
+        <div class="pt-1 pb-1"> <small><i class="bi bi-clock"></i> {{item.activityCompletionDate|date:"short"}}</small>
         </div>
-
-        <div class="col-xs-6 col-sm-8 mt-6">
-            <div id="text1">
-                <span class="hitory-comments">{{item.ActivityCompletedBy}}</span>
-            </div>
-        </div>
-        <div class="col-xs-6 col-sm-4 mt-6">
-            <div id="text3">
-                <span class="float-right"><i class="bi bi-calendar-check-fill"></i>
-                    {{item.activityCompletionDate|date:"short"}}
-                </span>
-            </div>
-        </div>
-
-        <hr>
+        <div class="pt-1 pb-1"><span><i class="bi bi-person"></i> {{item.ActivityCompletedBy}}</span></div>
     </div>
 </div>
