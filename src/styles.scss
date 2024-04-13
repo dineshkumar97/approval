@@ -248,3 +248,7 @@ body{
     text-decoration-color: blue;
     cursor: pointer;
 }
+
+.iframe-modal{
+    --bs-modal-width: 1100px !important;
+}

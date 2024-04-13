@@ -11,6 +11,7 @@ import { CommentComponent } from '../comment/comment.component';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SharedService } from '../../services/shared.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-pending-table',
@@ -32,9 +33,11 @@ export class PendingTableComponent implements OnInit, OnDestroy {
   public userId: string;
   public isLoading = false;
   private offcanvasService = inject(NgbOffcanvas);
-  activityName: string;
+  public activityName: string;
+  public detailsView: SafeResourceUrl;
 
   constructor(private service: ApprovalService, private sharedService: SharedService,
+    private safe: DomSanitizer,
     private fb: FormBuilder, private route: ActivatedRoute) {
     this.userId = this.route.snapshot.queryParamMap.get('userId') ?? '';
   }
@@ -54,18 +57,20 @@ export class PendingTableComponent implements OnInit, OnDestroy {
     this.service.GetApprovalPendingItem(this.userId, this.processId).subscribe({
       next: x => {
         this.tableData = x;
-
       }, error: err => console.log(err)
     })
   }
 
   public loadApprovalForm(): void {
     this.approvalForm = this.fb.group({
-      approval: [null, Validators.required]
+      approval: [null, Validators.required],
+      returnInitiator: [null],
     });
   }
 
 
+  public isReturnInitator = false;
+  public isDisableReturn = false;
   public onApprovalFlowClick(wrokflowType: string, activityName: string, data: ApprovalPendingItem): void {
     this.approvalData = data;
     console.log("onApprovalFlowClick", this.approvalData)
@@ -81,12 +86,21 @@ export class PendingTableComponent implements OnInit, OnDestroy {
         this.comboKey = this.approvalData?.reject?.processflowID;
         break;
       case "Return":
-        this.approveRejectTitle = this.approvalData?.returnToInitiator?.comboDisplay;
+        this.approveRejectTitle = 'Return / Return to Initiator';
         this.activityName = activityName;
-        this.comboKey = this.approvalData?.returnToInitiator?.processflowID;
+        if (this.approvalData?.returnToInitiator != null && this.approvalData?.return != null) {
+          this.isReturnInitator = false;
+        } else if (this.approvalData?.returnToInitiator != null) {
+          this.isReturnInitator = true;
+          this.isDisableReturn = true;
+        } else if (this.approvalData?.return != null) {
+          this.isReturnInitator = false;
+          this.isDisableReturn = true;
+        }
         break;
     }
   }
+
 
   onHistoryClick(data: ApprovalPendingItem) {
     const offcanvasRef = this.offcanvasService.open(HistoryComponent, { position: 'end', backdrop: 'static' });
@@ -99,10 +113,16 @@ export class PendingTableComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
+    let comboKey: any
+    if (this.approveRejectTitle == 'Return / Return to Initiator') {
+      comboKey = this.isReturnInitator ? 'Return to Initiator' : 'Return'
+    } else {
+      comboKey = this.comboKey;
+    }
     const json: any = {
       processID: this.approvalData.processID,
       currentFlowID: this.approvalData.currentFlowID,
-      comboKey: this.comboKey,
+      comboKey: comboKey,
       packageID: this.approvalData.processPackageID,
       instanceID: this.approvalData.instanceID,
       viewLink: this.approvalData.viewLink,
@@ -127,6 +147,12 @@ export class PendingTableComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+
+  public viewDetails(details: any): void {
+    const url = 'https://icons.getbootstrap.com/';
+    this.detailsView = this.safe.bypassSecurityTrustResourceUrl(url)
   }
 
 }
