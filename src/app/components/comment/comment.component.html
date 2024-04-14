@@ -16,14 +16,16 @@
             </li>
         </ul>
     </div>
-    <form [formGroup]="commentsForm" class="chat-input">
+   <div>
+    <form [formGroup]="commentsForm" class="chat-input comment-text">
         <div class="input-group">
             <textarea class="form-control" formControlName="comments" id="example1" type="text"
                 placeholder="Enter the comments (Max 500)" minlength="2" maxlength="500" rows="3"></textarea>
-            <div class="input-group-append m-auto">
+            <div class="input-group-append m-auto ml-10px">
                 <button type="button" (click)="onSubmit()" [disabled]="commentsForm.invalid" class="btn btn-primary">
                     <i class="bi bi-send"></i></button>
             </div>
         </div>
     </form>
+   </div>
 </div>
