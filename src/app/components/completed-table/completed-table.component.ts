@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { ApprovalCompletedItem } from '../../models/approvalItem';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbOffcanvas, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbOffcanvas, NgbPaginationModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApprovalService } from '../../services/approval.service';
 import { HistoryComponent } from '../history/history.component';
@@ -13,17 +13,19 @@ import { CommentComponent } from '../comment/comment.component';
 @Component({
   selector: 'app-completed-table',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbTooltipModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbTooltipModule,NgbPaginationModule],
   templateUrl: './completed-table.component.html',
   styleUrl: './completed-table.component.scss'
 })
 export class CompletedTableComponent implements OnInit, OnDestroy {
-  subscription: Subscription;
-  processId: string;
-  userId: string;
-  tableData: ApprovalCompletedItem[] = [];
+  public  subscription: Subscription;
+  public processId: string;
+  public userId: string;
+  public tableData: ApprovalCompletedItem[] = [];
   private offcanvasService = inject(NgbOffcanvas);
-
+  public pageSize = 10;
+  public page = 1;
+  public isLoading = false;
   constructor(private sharedService: SharedService, private route: ActivatedRoute,
     private router: Router,
     private service: ApprovalService) {
@@ -39,8 +41,11 @@ export class CompletedTableComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
+    this.page = 1;
+    this.isLoading = true;
     this.service.GetApprovalCompletedItem(this.userId, this.processId).subscribe({
       next: (x: ApprovalCompletedItem[]) => {
+        this.isLoading = false;
         this.tableData = x;
       }, error: (err: any) => console.log(err)
     });

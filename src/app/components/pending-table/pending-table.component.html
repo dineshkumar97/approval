@@ -11,9 +11,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of tableData; index as i;">
+                <tr *ngFor="let item of tableData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;index as i;">
                     <td>{{item.processName}}<br>
-                        <span class="hyper-link"  (click)="viewDetails()">View Details
+                        <span class="hyper-link" (click)="viewDetails()">View Details
                         </span>
                     </td>
                     <td> {{item.initiatedbyname}}</td>
@@ -39,9 +39,7 @@
                             </span>
                             <span class="btn-icon btn-clr-ash ps-2">
                                 <i class="bi bi-chat-left cursor-pointer" title="Collaboration"
-                                    data-bs-toggle="offcanvas" data-bs-target="#commentscanvas"
-                                    aria-controls="offcanvasRight" ngbTooltip="Collaboration"
-                                    (click)="onCommentClick(item)"></i>
+                                    ngbTooltip="Collaboration" (click)="onCommentClick(item)"></i>
                             </span>
 
                         </div>
@@ -60,6 +58,7 @@
             </tbody>
 
         </table>
+        <ngb-pagination [collectionSize]="tableData.length" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
     </div>
 </div>
 <div class="loading" *ngIf="isLoading"></div>
@@ -81,15 +80,15 @@
             <div class="row mt-6" *ngIf="activityName ==='I'">
                 <div class="col-6 col-md-8">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value=""
-                        [(ngModel)]="isReturnInitator" [ngModelOptions]="{standalone: true}"
-                        [checked]="isReturnInitator"[disabled]="isDisableReturn" id="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" value="" [(ngModel)]="isReturnInitator"
+                            [ngModelOptions]="{standalone: true}" [checked]="isReturnInitator"
+                            [disabled]="isDisableReturn" id="flexCheckDefault">
                         <label class="form-check-label" for="flexCheckDefault">
                             Return to Initiator
                         </label>
                     </div>
                 </div>
-                <div class="col-6 col-md-4"> <button type="button" (click)="onSubmit()" 
+                <div class="col-6 col-md-4"> <button type="button" (click)="onSubmit()"
                         [disabled]="approvalForm.invalid" class="btn btn-primary float-right"><i
                             class="bi bi-send"></i></button></div>
             </div>

@@ -6,6 +6,7 @@ import { CommentResponse } from '../../models/commentresponse';
 import { ApprovalService } from '../../services/approval.service';
 import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
+import { ToasterService } from '../../services/toaster.service';
 
 @Component({
   selector: 'app-comment',
@@ -21,7 +22,7 @@ export class CommentComponent {
   public commentsForm: FormGroup;
   userId: string;
 
-  constructor(private service: ApprovalService, private route: ActivatedRoute, private fb: FormBuilder) {
+  constructor(private service: ApprovalService, private route: ActivatedRoute,private toast:ToasterService,private fb: FormBuilder) {
     this.userId = this.route.snapshot.queryParamMap.get('userId') ?? '';
   }
 
@@ -42,7 +43,7 @@ export class CommentComponent {
     this.service.SetComment(json).subscribe({
       next: (response: boolean) => {
         this.loadComment(this.data);
-        alert('Saved Successfully')
+        this.toast.showSuccess('Saved Successfully');
       }, error: (err: any) => console.log(err)
     });
   }

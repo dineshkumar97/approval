@@ -3,17 +3,18 @@ import { ApprovalPendingItem } from '../../models/approvalItem';
 import { CommonModule } from '@angular/common';
 import { ApprovalService } from '../../services/approval.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgbOffcanvas, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbOffcanvas, NgbPaginationModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { HistoryComponent } from '../history/history.component';
 import { CommentComponent } from '../comment/comment.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SharedService } from '../../services/shared.service';
+import { ToasterService } from '../../services/toaster.service';
 
 @Component({
   selector: 'app-pending-table',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbTooltipModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbTooltipModule,NgbPaginationModule],
   templateUrl: './pending-table.component.html',
   styleUrl: './pending-table.component.scss'
 })
@@ -31,9 +32,11 @@ export class PendingTableComponent implements OnInit, OnDestroy {
   public isLoading = false;
   private offcanvasService = inject(NgbOffcanvas);
   public activityName: string;
+  public pageSize = 10;
+  public page = 1;
 
   constructor(private service: ApprovalService, private sharedService: SharedService,
-    private router: Router,
+    private router: Router,private toast:ToasterService,
     private fb: FormBuilder, private route: ActivatedRoute) {
     this.userId = this.route.snapshot.queryParamMap.get('userId') ?? '';
   }
@@ -50,9 +53,12 @@ export class PendingTableComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
+    this.isLoading = true;
+    this.page = 1;
     this.service.GetApprovalPendingItem(this.userId, this.processId).subscribe({
       next: x => {
         this.tableData = x;
+        this.isLoading = false;
       }, error: err => console.log(err)
     })
   }
@@ -130,7 +136,9 @@ export class PendingTableComponent implements OnInit, OnDestroy {
         if (response) {
           this.approvalForm.reset();
           this.closeModal.nativeElement.click();
-          alert('Saved Successfully')
+          let message = this.activityName == 'F' ? 'Approved Successfully' :
+          this.activityName == 'R' ? 'Rejected Successfully':'Return to Initiator Successfullu';
+          this.toast.showSuccess(message)
           this.sharedService.isTabRefresh.next(true);
           this.loadData();
         }

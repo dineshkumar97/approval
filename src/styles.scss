@@ -1,9 +1,11 @@
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+
 /* You can add global styles to this file, and also import other style files */
-body{
-    background-color: #e4e4f4 !important;    
+body {
+    background-color: #e4e4f4 !important;
 }
+
 .bg-primary {
     background-color: #802081 !important;
 }
@@ -27,13 +29,14 @@ body{
 }
 
 
-.pending-bg{
+.pending-bg {
     background-color: #802081;
     width: 150px;
     height: 50px;
     border: 1px solid #802081;
     border-radius: 4px;
 }
+
 .pending-bg-text {
     color: #ffffff;
 }
@@ -41,13 +44,15 @@ body{
 .completed-bg-text {
     color: #000000;
 }
-.completed-bg{
+
+.completed-bg {
     background-color: #e7c5e7;
     width: 150px;
     height: 50px;
     border: 1px solid #e7c5e7;
     border-radius: 4px;
 }
+
 .mt-6 {
     margin-top: 1rem !important;
 }
@@ -63,6 +68,7 @@ body{
 .active-text {
     color: #ffffff;
 }
+
 .active-textcompleted {
     color: red;
 }
@@ -92,8 +98,9 @@ body{
     border-bottom: 1px solid #eee;
     padding: 15px;
     cursor: pointer;
-    &.active{
-        background-color:#FFFADE;
+
+    &.active {
+        background-color: #FFFADE;
     }
 }
 
@@ -151,16 +158,19 @@ body{
 .offcanvas-header {
     border-bottom: 1px solid #dadce0;
 }
-.offcanvas.offcanvas-end{
+
+.offcanvas.offcanvas-end {
     width: 600px !important;
 }
 
-.font-size-10{
+.font-size-10 {
     font-size: 10px;
 }
-.cursor-pointer{
+
+.cursor-pointer {
     cursor: pointer;
 }
+
 @media screen and (max-device-width: 480px) {
     .btn-white {
         width: 130px;
@@ -173,36 +183,43 @@ body{
     }
 }
 
-.mr-10{
+.mr-10 {
     margin-right: 10px;
 }
-.float-right{
-    float:right;
+
+.float-right {
+    float: right;
 }
-.btn-icon{
+
+.btn-icon {
     cursor: pointer;
     padding: 0 2px;
     font-weight: bolder;
     font-size: 1.675rem;
-    &.btn-clr-success{
+
+    &.btn-clr-success {
         color: #00BBB6;
     }
-    &.btn-clr-danger{
+
+    &.btn-clr-danger {
         color: #EC5663;
     }
-    &.btn-clr-blue{
+
+    &.btn-clr-blue {
         color: #0072CC;
     }
-    &.btn-clr-ash{
+
+    &.btn-clr-ash {
         color: #7076A6;
     }
-    &.btn-clr-yellow{
+
+    &.btn-clr-yellow {
         color: #F9F871;
     }
 }
 
 
-.status{
+.status {
     background-color: #49f00680;
     padding: 3px 0px;
     border-radius: 50px;
@@ -210,55 +227,89 @@ body{
     width: 105px;
     border: 2px solid #75b798;
     font-size: 12px;
-    font-weight: 600;;
+    font-weight: 600;
+    ;
     float: right;
 }
 
 
-.history-subtitle{
+.history-subtitle {
     color: #802081 !important;
     font-weight: 600;
 }
 
-.m-t-b-3{
+.m-t-b-3 {
     margin: 4px 0px 10px 0px;
 }
 
-.hitory-comments{
+.hitory-comments {
     color: #73787e;
 }
 
-.btn-primary{
+.btn-primary {
     background-color: #802081 !important;
     border-color: #802081 !important;
 }
-.form-control{
+
+.form-control {
     box-shadow: none !important;
 }
 
-.justify-content-center{
-    justify-content: center  !important;
+.justify-content-center {
+    justify-content: center !important;
 }
-.no-records{
+
+.no-records {
     text-align: center;
 }
 
-.hyper-link{
+.hyper-link {
     text-decoration: underline;
     text-decoration-color: blue;
     cursor: pointer;
 }
 
-.iframe-modal{
+.iframe-modal {
     --bs-modal-width: 1100px !important;
 }
 
-.comment-text{
+.comment-text {
     padding: 0px 15px !important;
     margin-bottom: 10px !important;
 }
 
 
-.ml-10px{
+.ml-10px {
     margin-left: 10px !important;
+}
+
+.p-toast.p-toast-top-right,
+.p-toast.p-toast-top-left,
+.p-toast.p-toast-top-center {
+    top: 100px
+}
+
+#close {
+    padding: 10px !important;
+}
+
+.loading {
+    padding: 45px;
+    border: 5px solid #ccc;
+    border-right-color: #802081;
+    border-radius: 50%;
+    -webkit-animation: rotate 1s infinite linear;
+    /* left, top and position just for the demo! */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+@-webkit-keyframes rotate {
+
+    /* 100% keyframe for  clockwise. 
+         use 0% instead for anticlockwise */
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
 }
