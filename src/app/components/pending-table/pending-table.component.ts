@@ -46,19 +46,17 @@ export class PendingTableComponent implements OnInit, OnDestroy {
     this.loadApprovalForm();
     this.subscription = this.sharedService.processId.subscribe(processId => {
       this.processId = processId ?? "";
-      this.loadData();
+      let tabStatus: any = sessionStorage.getItem('tabStatus')
+      if (tabStatus == 'Pending' || tabStatus == null) {
+        this.loadData();
+      }
     });
-
-
   }
 
   loadData() {
-    this.isLoading = true;
-    this.page = 1;
     this.service.GetApprovalPendingItem(this.userId, this.processId).subscribe({
       next: x => {
         this.tableData = x;
-        this.isLoading = false;
       }, error: err => console.log(err)
     })
   }

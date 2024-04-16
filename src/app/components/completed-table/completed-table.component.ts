@@ -36,16 +36,16 @@ export class CompletedTableComponent implements OnInit, OnDestroy {
     this.subscription = this.sharedService.processId.subscribe(processId => {
       this.processId = processId ?? "";
       console.log(this.userId, this.processId);
-      this.loadData();
+      let tabStatus: any = sessionStorage.getItem('tabStatus')
+      if (tabStatus == 'Completed') {
+        this.loadData();
+      }
     });
   }
 
   loadData() {
-    this.page = 1;
-    this.isLoading = true;
     this.service.GetApprovalCompletedItem(this.userId, this.processId).subscribe({
       next: (x: ApprovalCompletedItem[]) => {
-        this.isLoading = false;
         this.tableData = x;
       }, error: (err: any) => console.log(err)
     });

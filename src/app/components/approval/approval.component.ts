@@ -70,7 +70,8 @@ export class ApprovalComponent implements OnInit {
     this.statusMessage = message;
     let url = message == 'Pending' ? "pending" : "completed";
     this.router.navigate([url], { relativeTo: this.route, queryParams: { userId: this.userId } })
-    sessionStorage.setItem('tabStatus',message)
+    sessionStorage.setItem('tabStatus',message);
+    this.sharedService.setProcessId('');
   }
 
   public onListItemClick(data: ApprovalListItem) {
