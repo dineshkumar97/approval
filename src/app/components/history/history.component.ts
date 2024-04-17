@@ -28,8 +28,8 @@ export class HistoryComponent implements OnInit {
     this.service.GetHistory(data.instanceID, data.processID.toString()).subscribe({
       next: (x: History[]) => {
         this.historyList = x;
-        this.historyList.forEach((element: any, index: any) => {
-          this.historyList[index].ActivityCompletedBy = element.ActivityCompletedBy == null ? '-' : element.ActivityCompletedBy;
+        this.historyList.forEach((element: History, index: any) => {
+          this.historyList[index].activityCompletedBy = element.activityCompletedBy == null ? '-' : element.activityCompletedBy;
           this.historyList[index].activityCompletionDate = element.activityCompletionDate == null ? '-' : element.activityCompletionDate;
         })
       }, error: (err: any) => console.log(err)
