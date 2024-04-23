@@ -154,8 +154,8 @@ export class PendingTableComponent implements OnInit, OnDestroy {
   }
 
 
-  public viewDetails(): void {
-    this.router.navigate(['/approval/detail'], { queryParams: { userId: this.userId, status: 'pending' } });
+  public viewDetails(data: ApprovalPendingItem): void {
+    this.router.navigate(['/approval/detail'], { queryParams: { userId: this.userId, status: 'pending', viewLink: data.viewLink } });
   }
 
 }

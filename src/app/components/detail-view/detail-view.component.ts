@@ -16,6 +16,7 @@ export class DetailViewComponent implements OnInit {
   public userId: string;
   public subscription: Subscription;
   public processId: string;
+  public viewLink: string;
   public statusMessage: string;
 
   constructor(private service: ApprovalService, private sharedService: SharedService,
@@ -23,6 +24,7 @@ export class DetailViewComponent implements OnInit {
     private route: ActivatedRoute) {
     this.userId = this.route.snapshot.queryParamMap.get('userId') ?? '';
     this.statusMessage = this.route.snapshot.queryParamMap.get('status') ?? '';
+    this.viewLink = this.route.snapshot.queryParamMap.get('viewLink') ?? '';
   }
 
 
@@ -35,7 +37,7 @@ export class DetailViewComponent implements OnInit {
       this.processId = processId ?? "";
     });
     console.log("status",  this.statusMessage )
-    const url = 'https://icons.getbootstrap.com/';
+    const url = this.viewLink;
     this.detailsView = this.safe.bypassSecurityTrustResourceUrl(url)
   }
 

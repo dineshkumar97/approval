@@ -13,12 +13,12 @@ import { CommentComponent } from '../comment/comment.component';
 @Component({
   selector: 'app-completed-table',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbTooltipModule,NgbPaginationModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbTooltipModule, NgbPaginationModule],
   templateUrl: './completed-table.component.html',
   styleUrl: './completed-table.component.scss'
 })
 export class CompletedTableComponent implements OnInit, OnDestroy {
-  public  subscription: Subscription;
+  public subscription: Subscription;
   public processId: string;
   public userId: string;
   public tableData: ApprovalCompletedItem[] = [];
@@ -66,7 +66,7 @@ export class CompletedTableComponent implements OnInit, OnDestroy {
   }
 
 
-  public viewDetails(): void {
-    this.router.navigate(['/approval/detail'], {  queryParams: { userId: this.userId ,status:'completed' } });
+  public viewDetails(data: ApprovalCompletedItem): void {
+    this.router.navigate(['/approval/detail'], { queryParams: { userId: this.userId, status: 'completed', viewLink: data.viewLink } });
   }
 }
