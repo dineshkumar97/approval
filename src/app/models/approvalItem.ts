@@ -9,12 +9,12 @@ export class ApprovalItem {
     viewLink: string;
 }
 
-export class ApprovalPendingItem extends ApprovalItem {    
-    return: boolean;
+export class ApprovalPendingItem extends ApprovalItem {
+    return: WorkflowCombo;
     isCompleted: boolean;
-    approval: any;
-    reject:any;
-    returnToInitiator:any;
+    approval: WorkflowCombo;
+    reject: WorkflowCombo;
+    returnToInitiator: WorkflowCombo;
 }
 
 
@@ -40,4 +40,10 @@ export class ApprovalWorkFlowRequest {
     currentuserID: number;
     remarks: string;
     activityName: string;
+}
+
+export class WorkflowCombo {
+    processflowID: string;
+    comboDisplay: string;
+    processDirection: string;
 }

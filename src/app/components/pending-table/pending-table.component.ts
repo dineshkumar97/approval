@@ -14,7 +14,7 @@ import { ToasterService } from '../../services/toaster.service';
 @Component({
   selector: 'app-pending-table',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbTooltipModule,NgbPaginationModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbTooltipModule, NgbPaginationModule],
   templateUrl: './pending-table.component.html',
   styleUrl: './pending-table.component.scss'
 })
@@ -26,7 +26,7 @@ export class PendingTableComponent implements OnInit, OnDestroy {
   @ViewChild('closeModal') closeModal: ElementRef;
   public approveRejectTitle: any;
   public approvalForm: FormGroup;
-  public approvalData: any;
+  public approvalData: ApprovalPendingItem;
   public comboKey: any;
   public userId: string;
   public isLoading = false;
@@ -36,7 +36,7 @@ export class PendingTableComponent implements OnInit, OnDestroy {
   public page = 1;
 
   constructor(private service: ApprovalService, private sharedService: SharedService,
-    private router: Router,private toast:ToasterService,
+    private router: Router, private toast: ToasterService,
     private fb: FormBuilder, private route: ActivatedRoute) {
     this.userId = this.route.snapshot.queryParamMap.get('userId') ?? '';
   }
@@ -47,7 +47,7 @@ export class PendingTableComponent implements OnInit, OnDestroy {
     this.subscription = this.sharedService.processId.subscribe(processId => {
       this.processId = processId ?? "";
       let tabStatus: any = sessionStorage.getItem('tabStatus');
-      console.log("tabStatus",tabStatus)
+      console.log("tabStatus", tabStatus)
       if (tabStatus == 'Pending' || tabStatus == null) {
         this.loadData();
       }
@@ -86,7 +86,7 @@ export class PendingTableComponent implements OnInit, OnDestroy {
         this.comboKey = this.approvalData?.reject?.processflowID;
         break;
       case "Return":
-        this.approveRejectTitle = 'Return / Return to Initiator';
+        this.approveRejectTitle = this.approvalData?.return ? this.approvalData?.return?.comboDisplay : 'Return / Return to Initiator';
         this.activityName = activityName;
         if (this.approvalData?.returnToInitiator != null && this.approvalData?.return != null) {
           this.isReturnInitator = false;
@@ -136,7 +136,7 @@ export class PendingTableComponent implements OnInit, OnDestroy {
           this.approvalForm.reset();
           this.closeModal.nativeElement.click();
           let message = this.activityName == 'F' ? 'Approved Successfully' :
-          this.activityName == 'R' ? 'Rejected Successfully':'Return to Initiator Successfullu';
+            this.activityName == 'R' ? 'Rejected Successfully' : 'Return to Initiator Successfullu';
           this.toast.showSuccess(message)
           this.sharedService.isTabRefresh.next(true);
           this.loadData();
@@ -154,8 +154,8 @@ export class PendingTableComponent implements OnInit, OnDestroy {
   }
 
 
-  public viewDetails(): void {
-    this.router.navigate(['/approval/detail'], {  queryParams: { userId: this.userId ,status:'pending' } });
+  public viewDetails(data: ApprovalPendingItem): void {
+    this.router.navigate(['/approval/detail'], { queryParams: { userId: this.userId, status: 'pending', viewLink: data.viewLink } });
   }
 
 }

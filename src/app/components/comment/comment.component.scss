@@ -38,3 +38,9 @@
     padding: 2px;
     padding-right: 20px;
   }
+
+  :host {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }

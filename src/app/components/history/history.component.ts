@@ -29,7 +29,7 @@ export class HistoryComponent implements OnInit {
       next: (x: History[]) => {
         this.historyList = x;
         this.historyList.forEach((element: any, index: any) => {
-          this.historyList[index].ActivityCompletedBy = element.ActivityCompletedBy == null ? '-' : element.ActivityCompletedBy;
+          this.historyList[index].activityCompletedBy = element.activityCompletedBy == null ? '-' : element.activityCompletedBy;
           this.historyList[index].activityCompletionDate = element.activityCompletionDate == null ? '-' :
             element.activityCompletionDate == '0001-01-01T00:00:00' ? '-' : element.activityCompletionDate;
         })
