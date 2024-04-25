@@ -31,7 +31,7 @@ body {
 
 .pending-bg {
     background-color: #802081;
-    width: 150px;
+    width: 100%;
     height: 50px;
     border: 1px solid #802081;
     border-radius: 4px;
@@ -47,7 +47,7 @@ body {
 
 .completed-bg {
     background-color: #e7c5e7;
-    width: 150px;
+    width: 100%;
     height: 50px;
     border: 1px solid #e7c5e7;
     border-radius: 4px;
@@ -313,3 +313,8 @@ body {
         -webkit-transform: rotate(360deg);
     }
 }
+
+.ml-8px {
+    margin-left: 8px !important;
+}
+

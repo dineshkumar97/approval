@@ -21,24 +21,24 @@
                     <td>
                         <div class="d-flex">
                             <span class="btn-icon btn-clr-success" *ngIf="!item.isCompleted && item.approval!=null">
-                                <i class="bi bi-journal-check cursor-pointer" data-toggle="tooltip" title="Approve"
+                                <i class="bi bi-journal-check cursor-pointer" data-toggle="tooltip" 
                                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" ngbTooltip="Approve"
                                     aria-controls="offcanvasRight"
                                     (click)="onApprovalFlowClick('Approve','F',item)"></i>
                             </span>
                             <span class="btn-icon btn-clr-danger ps-2" *ngIf="!item.isCompleted  && item.reject!=null">
-                                <i class="bi bi-clipboard-x cursor-pointer" title="Reject" data-bs-toggle="offcanvas"
+                                <i class="bi bi-clipboard-x cursor-pointer"  data-bs-toggle="offcanvas"
                                     data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" ngbTooltip="Reject"
                                     (click)="onApprovalFlowClick('Reject','R',item)"></i>
                             </span>
                             <span class="btn-icon btn-clr-blue ps-2"
                                 *ngIf="!item.isCompleted   && (item.returnToInitiator!=null || item.return !=null) ">
-                                <i class="bi bi-arrow-counterclockwise cursor-pointer" title="Return"
+                                <i class="bi bi-arrow-counterclockwise cursor-pointer" 
                                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" ngbTooltip="Return"
                                     aria-controls="offcanvasRight" (click)="onApprovalFlowClick('Return','I',item)"></i>
                             </span>
                             <span class="btn-icon btn-clr-ash ps-2">
-                                <i class="bi bi-chat-left cursor-pointer" title="Collaboration"
+                                <i class="bi bi-chat-left cursor-pointer"
                                     ngbTooltip="Collaboration" (click)="onCommentClick(item)"></i>
                             </span>
 
@@ -46,8 +46,7 @@
                     </td>
                     <td>
                         <span class="btn-icon btn-clr-blue">
-                            <i class="bi bi-clock-history" title="History" data-bs-toggle="offcanvas"
-                                data-bs-target="#ocHistory" aria-controls="ocHistory"
+                            <i class="bi bi-clock-history"  ngbTooltip="History"  aria-controls="ocHistory"
                                 (click)="onHistoryClick(item)"></i>
                         </span>
                     </td>

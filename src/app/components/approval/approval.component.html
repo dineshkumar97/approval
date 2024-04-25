@@ -11,7 +11,7 @@
         <div class="col-xl-3 col-lg-6 col-md-12 col-12">
             <div class="card white-block">
                 <div class="card-body">
-                    <div class="d-flex">
+                    <!-- <div class="d-flex">
                         <div class="width-50">
                             <button class="btn" [className]="pending ? 'pending-bg' : 'completed-bg'"
                                 (click)="pendingCompleted('Pending')">
@@ -25,7 +25,23 @@
                                     [className]="!pending ? 'pending-bg-text' : 'completed-bg-text'">Completed</span>
                             </button>
                         </div>
-                    </div>
+                    </div> -->
+
+                    <div class="row justify-content-around">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-6">
+                            <button class="btn" [className]="pending ? 'pending-bg' : 'completed-bg'"
+                            (click)="pendingCompleted('Pending')">
+                            <span [className]="pending ? 'pending-bg-text' : 'completed-bg-text'">Pending</span>
+                        </button>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-6">
+                            <button class="btn m-l-17" [className]="!pending ? 'pending-bg' : 'completed-bg'"
+                            (click)="pendingCompleted('Completed')">
+                            <span
+                                [className]="!pending ? 'pending-bg-text' : 'completed-bg-text'">Completed</span>
+                        </button>
+                        </div>
+                      </div>
                 </div>
             </div>
             <div class="white-block mt-6">

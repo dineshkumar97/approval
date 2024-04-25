@@ -14,7 +14,10 @@
                     {{item.status}}</span>
             </small>
         </div>
-        <div class="pt-1 pb-1"> <small><i class="bi bi-clock"></i> {{item.activityCompletionDate|date:"short"}}</small>
+        <div class="pt-1 pb-1">
+            <small *ngIf="item.activityCompletionDate=='-'"><i class="bi bi-clock"></i><span class="ml-8px">-</span> </small>
+            <small *ngIf="item.activityCompletionDate !='-'"><i class="bi bi-clock"></i> {{item.activityCompletionDate|
+                date:'dd-MM-yyyy h:mm a ' }}</small>
         </div>
         <div class="pt-1 pb-1"><span><i class="bi bi-person"></i> {{item.ActivityCompletedBy}}</span></div>
     </div>
