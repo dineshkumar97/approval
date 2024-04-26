@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Visitor Information</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+
+</head>
+
+<style>
+    html {
+        overflow-x: hidden;
+    }
+
+    .container-fluid {
+        margin-top: 50px;
+    }
+
+    .px-6 {
+        padding-right: 2rem !important;
+        padding-left: 2rem !important;
+    }
+
+    .vistor-information {
+        text-align: center;
+        border: 1px solid #adb5bd00;
+        border-radius: .25rem;
+        background: #06adcff5;
+        color: #ffffff;
+    }
+
+    .visitor {
+        font-weight: 400;
+        font-size: 26px;
+        padding: 5px 10px;
+    }
+
+    .card {
+        padding: 0;
+        margin-bottom: 25px;
+    }
+
+    .fs-20 {
+        font-size: 20px;
+    }
+
+    .ta-c {
+        text-align: center;
+    }
+
+    .padding-10-20 {
+        padding: 10px 20px;
+    }
+
+    .mt-10px {
+        margin-top: 10px;
+    }
+
+    img {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+    }
+
+    .fs-26 {
+        font-size: 26px;
+    }
+</style>
+
+<body>
+
+
+
+    <div class="container-fluid px-5">
+        <div class="row">
+            <!-- Left Column with Background Image -->
+            <div class="col-md-5">
+                <div class="p-4 ta-c">
+                    <h1 class="bg-title fs-26">Vistor</h1>
+                    <img src="default.jpg" id="photoLink" alt="photoLink">
+                    <h6 id="visitorName" class="mt-10px fs-20"></h6>
+                    <span id="visitorPassNo"></span>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-md-6 card">
+                <div class="vistor-information">
+                    <h2 class="visitor">Visit Information</h2>
+                </div>
+                <div class="ta-c">
+                    <strong id="test" class="fs-20" id="visitorPassNo"></strong>
+                </div>
+
+                <div class="row padding-10-20">
+                    <div class="col-md-6">
+                        <span>Entry Date and Time</span>
+                    </div>
+                    <div class="col-md-6" id="entryDateAndTime"></div>
+                </div>
+                <div class="row padding-10-20">
+                    <div class="col-md-6">
+                        <span>Exit Time Date and Time</span>
+                    </div>
+                    <div class="col-md-6" id="exitDateAndTime"></div>
+                </div>
+                <div class="row padding-10-20">
+                    <div class="col-md-6">
+                        <span>Vehicle Number</span>
+                    </div>
+                    <div class="col-md-6" id="vehicleNumber"></div>
+                </div>
+                <div class="row padding-10-20">
+                    <div class="col-md-6">
+                        <span>Number of People</span>
+                    </div>
+                    <div class="col-md-6" id="noOfPerson"></div>
+                </div>
+                <div class="row padding-10-20">
+                    <div class="col-md-6">
+                        <span>Building</span>
+                    </div>
+                    <div class="col-md-6" id="buildingName"></div>
+                </div>
+                <div class="row padding-10-20">
+                    <div class="col-md-6">
+                        <span>Whom to Visit</span>
+                    </div>
+                    <div class="col-md-6" id="personToVisit"></div>
+                </div>
+                <div class="row padding-10-20">
+                    <div class="col-md-6">
+                        <span>Approved By Date and Time</span>
+                    </div>
+                    <div class="col-md-6" id="approvedDate"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        function loadData() {
+            $.ajax({
+                url: 'http://iproofaxon.info/genericapi/displydata',
+                method: 'GET',
+                success: function (res) {
+                    let data = res;
+                    let link = data.photoLink == '' ? 'default.jpg' : data.photoLink;
+                    $('#entryDateAndTime').text(convertDate(data.entryDateAndTime));
+                    $('#exitDateAndTime').text(convertDate(data.exitDateAndTime));
+                    $('#visitorName').text(data.visitorName);
+                    $('#visitorPassNo').text(data.visitorPassNo);
+                    $('#noOfPerson').text(data.noOfPerson);
+                    $('#buildingName').text(data.buildingName);
+                    $('#personToVisit').text(data.personToVisit);
+                    $('#vehicleNumber').text(data.vehicleNumber);
+                    $('#approvedDate').text(convertDate(data.approvedDate));
+                    $('img').attr('src', link);
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors here
+                    console.error(status, error);
+                }
+            });
+        };
+        function convertDate(date) {
+            if (date == null || date == '')
+                return '';
+            let te = Date.parse(date);
+            let entrydate = moment(te).format("DD/MM/YYYY HH:mm");
+            return entrydate;
+        }
+        loadData();
+
+        setInterval(() => {
+            loadData();
+        }, 3000);
+
+    </script>
+</body>
+
+
+</div>
+
+</html>
